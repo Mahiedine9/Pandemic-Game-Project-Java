@@ -74,6 +74,14 @@ public class City {
 	public void removeCube(Cube cube) {
 		this.cubes.remove(cube);
 	}
+
+	public ArrayList<Cube> getCubes() {
+		return this.cubes ;
+	}
+
+	public ArrayList<Disease> getDiseases() {
+		return this.diseases ;
+	}
 	
 	/**
 	 * Returns whether the city has a research station or not.

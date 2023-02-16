@@ -30,14 +30,14 @@ public class WorldMap {
 		City previous ;
 		City next ;
 
-		iterator = cities.iterator() ;
+		Iterator<City> iterator = cities.iterator() ;
 
 		While (iterator.hasNext()) {
 			actual = iterator.next() ;
 			if actual.equals(mycity) {next = iterator.next(); }
 		}
 
-		iterator2 = cities.iterator() ;
+		Iterator<City> iterator2 = cities.iterator() ;
 
 		While (iterator2.hasNext()) {
 			actual = iterator2.next() ;
@@ -46,7 +46,8 @@ public class WorldMap {
 		}
 
 		ArrayList(City) neighbourCities = new ArrayList<City> ;
-		neighbourCities.add(previous, next) ;
+		neighbourCities.add(previous) ;
+		neighbourCities.add(next) ;
 
 		return neighbourCities ;
 
