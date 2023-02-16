@@ -41,6 +41,7 @@
 ## Semaine 1
 
 ## Semaine 2
+  - Ajout d'UML pour les classes City/Map et leur code associé (Sauf Constructur Map avec JSON à venir !)
 
 ## Semaine 3
 
