@@ -2,6 +2,7 @@ package PandemicGame ;
 
 import java.util.HashMap ;
 
+
 public class WorldMap {
 
 	private ArrayList<City> cities ;
@@ -10,6 +11,7 @@ public class WorldMap {
 	private Integer globalInfectionRate  = 0
 	private Integer nbOfResearchStations = 0;
 	private Integer nbOfOutbreakCities = 0 ;
+	private JSONObject mapJSON;
 
 	public Map(ArrayList<City> cities, ArrayList<Player> players) {
 		this.cities = cities ;
@@ -18,12 +20,30 @@ public class WorldMap {
 
 
 
-	public Map() {}
+	public Map(String fileName, int nbOfPlayers, int globalInfectionRate) {
+		FileReader reader = new FileReader(fileName);
+		JSONObject map = new JSONObject(new JSONTokener(reader));
+		this.mapJSON = map;
+		JSONObject jsonCities = map.getJSONObject("cities");
+		Iterator<String> data = jsonCities.keys();
+		while(data.hasNext()) {
+			City city = new City(data.next());
+			city.nbOutbreaks = data.getInt(data.next());
+			this.cities.add(city);
+		}
+
+		for(int i=0; i<nbOfPlayers;i++) {
+			this.players.add(new Player());
+		}
+
+		this.globalInfectionRate = globalInfectionRate;
+	}
 
 
 	public movePlayer (Player player, City newCity) {
 		this.cities.put(player,newCity) ;
 	}
+
 
 
 	public  getNeighbourCities(City mycity) {
@@ -53,6 +73,7 @@ public class WorldMap {
 
 	}
 
+	
 
 	public ArrayList<Plyaer> getPlayers() {
 		return this.players ;

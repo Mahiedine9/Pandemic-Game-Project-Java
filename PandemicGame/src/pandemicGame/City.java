@@ -138,4 +138,12 @@ public class City {
 	public void removeDisease(Disease disease) {
 		this.diseases.remove(disease);
 	}
+
+	public ArrayList<City> getDiseases() {
+        return this.cities;
+    }
+
+    public int getCubes() {
+        return this.Cubes;
+    }
 }
