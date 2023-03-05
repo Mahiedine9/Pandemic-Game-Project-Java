@@ -2,7 +2,7 @@ package Game;
 
 import java.lang.reflect.Array;
 
-public class City {
+public class City{
 	
 	/**
 	 * The name of the city.
