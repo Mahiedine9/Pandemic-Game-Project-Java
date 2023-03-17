@@ -78,11 +78,11 @@ public class City {
 		this.cubes.remove(cube);
 	}
 
-	public ArrayList<Cube> getCubes() {
+	public List<Cube> getCubes() {
 		return this.cubes ;
 	}
 
-	public ArrayList<Disease> getDiseases() {
+	public List<Disease> getDiseases() {
 		return this.diseases ;
 	}
 	
@@ -100,6 +100,10 @@ public class City {
 	public void buildResearchStation() {
 		this.researchStation = true;
 	}
+
+	public void removeStation(){
+		this.researchStation = false;
+	} 
 	
 	/**
 	 * Removes all cubes from the city.
@@ -141,12 +145,4 @@ public class City {
 	public void removeDisease(Disease disease) {
 		this.diseases.remove(disease);
 	}
-
-	public ArrayList<City> getDiseases() {
-        return this.cities;
-    }
-
-    public int getCubes() {
-        return this.Cubes;
-    }
 }

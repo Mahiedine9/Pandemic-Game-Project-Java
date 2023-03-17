@@ -8,5 +8,7 @@ public class Cube {
 		this.disease = disease ;
 	} 
 
-	public Cube() ;
+	public Disease getDisease(){
+		return this.disease;
+	} 
 }
