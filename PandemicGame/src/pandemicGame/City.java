@@ -1,5 +1,8 @@
 package pandemicGame;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.lang.reflect.Array;
 
 public class City {
