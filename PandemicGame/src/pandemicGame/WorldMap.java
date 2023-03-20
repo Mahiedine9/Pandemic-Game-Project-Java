@@ -40,13 +40,13 @@ public class WorldMap {
 	}
 
 
-	public movePlayer (Player player, City newCity) {
-		this.cities.put(player,newCity) ;
+	public movePlayer (Player player, City newCity){
+		this.cities.put(player,newCity);
 	}
 
 
 
-	public  getNeighbourCities(City mycity) {
+	public List<City> getNeighbourCities(City mycity) {
 		City previous ;
 		City next ;
 

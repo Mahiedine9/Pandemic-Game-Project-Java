@@ -133,8 +133,9 @@ public class CityTests {
 	/**
      * Tests the removeDisease function of the City class.
      */
-	@Test void testRemoveDisease() {
-		Disease d = new Disease()
+	@Test 
+	    public void testRemoveDisease() {
+		Disease d = new Disease();
 		this.city1.addDisease(d) ;
 		AssertFalse(this.city1.getDiseases.isEmpty()) ;
 
@@ -151,3 +152,4 @@ public class CityTests {
 		this.city2 = null ;
 		System.gc() ;
 	}
+} 
