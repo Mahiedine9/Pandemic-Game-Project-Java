@@ -78,5 +78,8 @@ public class WorldMapTest {
         worldMap.increaseOutbreakCounter(cities.get(0));
         assertEquals(1, worldMap.getNbOfOutbreakCities());
     }
+    public static junit.framework.Test suite() {
+      return new junit.framework.JUnit4TestAdapter(pandemicGame.WorldMapTests.class);
+   }
 
 }

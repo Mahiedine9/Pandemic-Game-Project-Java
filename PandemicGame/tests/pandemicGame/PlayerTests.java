@@ -49,7 +49,12 @@ public class PlayerTests {
 		AssertTrue(this.player1.GetNBActionsRemaining() == 4);
 		this.player1.UpdateNbActionsRemaining();
 		AssertTrue(this.player1.GetNBActionsRemaining() == 3);
-	}      
+	}
+
+	public static junit.framework.Test suite() {
+      return new junit.framework.JUnit4TestAdapter(pandemicGame.PlayerTests.class);
+   }
+   
 
 
 

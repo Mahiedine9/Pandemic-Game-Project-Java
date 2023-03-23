@@ -152,4 +152,8 @@ public class CityTests {
 		this.city2 = null ;
 		System.gc() ;
 	}
+
+	public static junit.framework.Test suite() {
+      return new junit.framework.JUnit4TestAdapter(pandemicGame.CityTests.class);
+   }
 } 
