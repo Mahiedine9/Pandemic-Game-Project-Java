@@ -1,13 +1,14 @@
-public class Doctor extends Role{
+package pandemicGame;
+
+public class Doctor extends Role {
 
     public Doctor(){
         super();
-    } 
+    }
 
-    public void TreatingDisease(City city){
+    public void treatingDisease(City city){
         city.removeAllCubes();
     }
-     
 
 
 
@@ -17,4 +18,5 @@ public class Doctor extends Role{
 
 
 
-} 
+
+}

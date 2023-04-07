@@ -1,4 +1,4 @@
-package PandemicGame ;
+package pandemicGame;
 
 import java.util.HashMap ;
 
@@ -8,19 +8,19 @@ public class WorldMap {
 	private ArrayList<City> cities ;
 	private ArrayList<Player> players ;
 	private HashMap<Player, City> locations = new HashMap<Player,City>() ;
-	private Integer globalInfectionRate  = 0
+	private Integer globalInfectionRate  = 0 ;
 	private Integer nbOfResearchStations = 0;
 	private Integer nbOfOutbreakCities = 0 ;
 	private JSONObject mapJSON;
 
-	public Map(ArrayList<City> cities, ArrayList<Player> players) {
+	public WorldMap(ArrayList<City> cities, ArrayList<Player> players) {
 		this.cities = cities ;
 		this.players = players ;
 	}
 
 
 
-	public Map(String fileName, int nbOfPlayers, int globalInfectionRate) {
+	public WorldMap(String fileName, int nbOfPlayers, int globalInfectionRate) {
 		FileReader reader = new FileReader(fileName);
 		JSONObject map = new JSONObject(new JSONTokener(reader));
 		this.mapJSON = map;
@@ -40,7 +40,7 @@ public class WorldMap {
 	}
 
 
-	public movePlayer (Player player, City newCity){
+	public void movePlayer (Player player, City newCity){
 		this.cities.put(player,newCity);
 	}
 
@@ -50,22 +50,22 @@ public class WorldMap {
 		City previous ;
 		City next ;
 
-		Iterator<City> iterator = cities.iterator() ;
+		Iterator<City> iterator = this.cities.iterator() ;
 
-		While (iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			actual = iterator.next() ;
-			if actual.equals(mycity) {next = iterator.next(); }
+			if (actual.equals(mycity)) {next = iterator.next(); }
 		}
 
 		Iterator<City> iterator2 = cities.iterator() ;
 
-		While (iterator2.hasNext()) {
+		while (iterator2.hasNext()) {
 			actual = iterator2.next() ;
-			if iterator2.next().equals(mycity) { previous = actual; }
+			if (iterator2.next().equals(mycity)) { previous = actual; }
 
 		}
 
-		ArrayList(City) neighbourCities = new ArrayList<City> ;
+		ArrayList<City> neighbourCities = new ArrayList<City>() ;
 		neighbourCities.add(previous) ;
 		neighbourCities.add(next) ;
 
@@ -73,7 +73,7 @@ public class WorldMap {
 
 	}
 
-	
+
 
 	public ArrayList<Plyaer> getPlayers() {
 		return this.players ;
@@ -81,7 +81,7 @@ public class WorldMap {
 
 	public ArrayList<City> getCities() {
 		return this.cities ;
-	} 
+	}
 
 	public City getLocation (Player player) {
 		return this.locations.get(player) ;
@@ -92,7 +92,7 @@ public class WorldMap {
 	}
 
 	public Integer getNbOfResearchStations() {
-		return this.nbOfResearchStations
+		return this.nbOfResearchStations ;
 	}
 
 	public Integer getNbOfOutbreakCities() {

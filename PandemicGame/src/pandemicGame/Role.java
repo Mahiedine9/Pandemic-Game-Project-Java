@@ -1,10 +1,10 @@
 package pandemicGame;
 
-public class Role{
+public class Role {
     private City city;
     private Player player;
 
-    public role(City city, Player player){
+    public Role (City city, Player player){
         this.city = city;
         this.player = player;
     }
@@ -16,4 +16,4 @@ public class Role{
 
 
 
-} 
+}
