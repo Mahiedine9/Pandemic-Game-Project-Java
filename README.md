@@ -22,7 +22,7 @@
 - Classe World fait. Constructeur JSON ne foncionne pas encore
 - Classes des Tests fait
 ### Difficultés restant à résoudre
-- Correction Constructeur World et 
+- Correction Constructeur World
 - la classe PandemicGame modélisant le jeu
 
 ## Livrable 2
@@ -46,6 +46,8 @@
 # Journal de bord
 
 ## Semaine 8
+
+- dans le cadre de rattraper notre travail, Nous avons commencer à corriger les livrable 1 et 2.
 
 ## Semaine 9
 
