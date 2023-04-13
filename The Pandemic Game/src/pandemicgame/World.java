@@ -18,7 +18,7 @@ import org.json.JSONTokener;
 
 public class World {
 	
-	public HashMap<City,ArrayList<City>> cities ;
+	public HashMap<City,ArrayList<City>> cities  = new HashMap<City,ArrayList<City>>() ;
 	public ArrayList<Disease> diseases  = new ArrayList<Disease>(Arrays.asList(Disease.values()));
 	public Integer infectionRate = 2;
 	public Integer outBreaks = 0;
@@ -34,6 +34,7 @@ public class World {
  * @throws FileNotFoundException if file not found
  */
 public World (String cities) throws FileNotFoundException {
+	
 		
 		FileReader reader = new FileReader(cities);
 		JSONObject map = new JSONObject(new JSONTokener(reader));
