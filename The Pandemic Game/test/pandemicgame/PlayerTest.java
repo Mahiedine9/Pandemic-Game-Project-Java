@@ -18,8 +18,11 @@ class PlayerTest {
 	@Test 
     public void TestGetPlayerHand(){
 		Player player = new Player("paul");
-		Card card1 = new Card();
-		Card card2 = new Card();
+		City city = new City("bejaia");
+		Disease disease1 = Disease.DISEASE1;
+		Disease disease2 = Disease.DISEASE2;
+		Card card1 = new PlayerCard(city, disease1);
+		Card card2 = new PlayerCard(city, disease2);
 		ArrayList<Card> hand = new ArrayList();
 		hand.add(card1);
 		hand.add(card2);
@@ -29,9 +32,12 @@ class PlayerTest {
 	}
 	@Test 
 	public void TestDiscard(){
+		City city = new City("bejaia");
+		Disease disease1 = Disease.DISEASE1;
+		Disease disease2 = Disease.DISEASE2;
 		Player player1 = new Player("paul");
-		Card card1 = new Card();
-		Card card2 = new Card();
+		Card card1 = new PlayerCard(city, disease1);
+		Card card2 = new PlayerCard(city, disease2);
 		ArrayList<Card> hand = new ArrayList();
 		hand.add(card1);
 		hand.add(card2);
