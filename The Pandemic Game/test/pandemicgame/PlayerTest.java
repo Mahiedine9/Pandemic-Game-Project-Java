@@ -1,0 +1,63 @@
+package pandemicgame;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+class PlayerTest {
+
+	@Test
+	public void NameTest(){
+		   Player player = new Player("paul");
+	       assertEquals("paul", player.GetName());
+	}
+	
+	@Test 
+    public void TestGetPlayerHand(){
+		Player player = new Player("paul");
+		Card card1 = new Card();
+		Card card2 = new Card();
+		ArrayList<Card> hand = new ArrayList();
+		hand.add(card1);
+		hand.add(card2);
+		player.AddCard(card1);
+		player.AddCard(card2);
+		assertEquals(player.GetPlayerHand(),hand);
+	}
+	@Test 
+	public void TestDiscard(){
+		Player player1 = new Player("paul");
+		Card card1 = new Card();
+		Card card2 = new Card();
+		ArrayList<Card> hand = new ArrayList();
+		hand.add(card1);
+		hand.add(card2);
+		player1.AddCard(card1);
+		player1.AddCard(card2);
+		assertEquals(player1.GetPlayerHand(),hand);
+		assertSame(2, player1.GetNBCards());
+		hand.remove(card1);
+		player1.Discard(card1);
+		assertEquals(player1.GetPlayerHand(),hand);
+		assertSame(1, player1.GetNBCards());
+	}
+	
+	@Test
+	public void TestActionsRemaining(){
+		Player player1 = new Player("paul");
+		assertTrue(player1.GetNBActionsRemaining() == 4);
+		player1.UpdateNbActionsRemaining();
+		assertTrue(player1.GetNBActionsRemaining() == 3);
+	}
+	
+
+	
+	
+	
+	
+	
+
+}

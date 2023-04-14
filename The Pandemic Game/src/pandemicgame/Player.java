@@ -2,7 +2,7 @@
  * The Player class represents a player in the Pandemic board game.
  * It contains information about the player's name, role, hand of cards, number of cards, current position on the map and remaining actions.
  */
- package pandemicGame;
+ package pandemicgame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +10,10 @@ import java.util.List;
 public class Player {
 
 	// The player's hand of cards
-	private List<Cards> playerHand;
+	private ArrayList<Card> playerHand;
 
 	// The player's name
 	private String name;
-
-	// The player's role
-	private Role role;
 
 	// The number of cards in the player's hand
 	private int cardsNB;
@@ -33,11 +30,10 @@ public class Player {
 	 * @param name The name of the player
 	 * @param role The role of the player
 	 */
-	public Player(String name, Role role) {
+	public Player(String name) {
 		this.name = name;
-		this.role = role;
 		this.playerHand = new ArrayList<>();
-		this.cardsNB = 5;
+		this.cardsNB = 0;
 		this.NBActionsRemaining = 4;
 	}
 
@@ -57,15 +53,6 @@ public class Player {
 	 */
 	public List<Card> GetPlayerHand(){
 		return this.playerHand;
-	}
-
-	/**
-	 * Returns the player's role.
-	 *
-	 * @return The player's role
-	 */
-	public Role GetRole(){
-		return this.role;
 	}
 
 	/**
