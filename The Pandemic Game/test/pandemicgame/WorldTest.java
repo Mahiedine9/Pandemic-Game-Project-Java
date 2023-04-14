@@ -25,7 +25,7 @@ class WorldTest {
 
 	@Test
 	public void testCreationIsOk() throws FileNotFoundException {
-		World world = new World("carte1.json") ;
+		World world = new World("The Pandemic Game/files/carte1.json") ;
 		assertEquals(World.class, world.getClass()) ;
 		
 			
