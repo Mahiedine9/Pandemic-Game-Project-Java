@@ -76,7 +76,7 @@ public class City {
 		for (Disease presentDisease : this.diseases) {
 			if (presentDisease.equals(disease) ) howManyCubes ++ ;
 		}
-		if (howManyCubes < 3 && ! this.isourBreakOfInfection(disease))  this.getDiseases().add(disease) ; 
+		if (howManyCubes < 3 && ! this.isourBreakOfInfection(disease))  this.diseases.add(disease) ; 
 		else this.declareOutBReakOfInfection(disease) ;}
 	
 	/**
