@@ -118,7 +118,7 @@ public class Player {
 		return this.NBActionsRemaining;
 	}
 	
-	public boolean CureDisease() {
+	public void CureDisease() {
 	    // Loop through all the possible diseases
 	    for (Disease disease : Disease.values()) {
 	        // Count how many cards the player has for this disease
@@ -137,13 +137,23 @@ public class Player {
 	            
 	            }
 	            this.UpdateNbActionsRemaining();
-	            return new Cure(disease);
-	            
-	            
+	            this.position.addCure(disease);  
 	        }
-	    }
-	    return null;
 	}
+	
+	    
+	public void TreatDisease(Disease disease) {
+		//check if the disaese is cured 
+		if (this.position.getCures().contains(disease)) {
+			//if the disease is cured, remove all cubes of that disease from the city
+			this.position.removeAllCubes(disease);
+			this.UpdateNbActionsRemaining();
+		} else {
+			//if the disease is not cured, remove one cube of that disease
+			this.position.removeCube(disease);
+			this.UpdateNbActionsRemaining();
+		}
+	}	
 
 	
 }
