@@ -10,7 +10,7 @@ import java.util.List;
 public class Player {
 
 	// The player's hand of cards
-	private ArrayList<Card> playerHand;
+	private ArrayList<PlayerCard> playerHand;
 
 	// The player's name
 	private String name;
@@ -51,7 +51,7 @@ public class Player {
 	 *
 	 * @return The player's hand of cards
 	 */
-	public List<Card> GetPlayerHand(){
+	public List<PlayerCard> GetPlayerHand(){
 		return this.playerHand;
 	}
 
@@ -60,7 +60,7 @@ public class Player {
 	 *
 	 * @param card The card to discard
 	 */
-	public void Discard(Card card){
+	public void Discard(PlayerCard card){
 		this.playerHand.remove(card);
 		this.cardsNB-=1;
 	}
@@ -117,4 +117,33 @@ public class Player {
 	public int GetNBActionsRemaining(){
 		return this.NBActionsRemaining;
 	}
+	
+	public boolean CureDisease() {
+	    // Loop through all the possible diseases
+	    for (Disease disease : Disease.values()) {
+	        // Count how many cards the player has for this disease
+	        int nbCards = 0;
+	        for (PlayerCard card : player.GetPlayerHand()) {
+	            if (card.getDisease() == disease) {
+	                nbCards++;
+	            }
+	        }
+	        // If the player has 5 cards of the same disease, cure it and remove the cards from their hand
+	        if (nbCards == 5) {
+	            for (PlayerCard card : player.GetPlayerHand()) {
+	                if (card.getDisease() == disease) {
+	                    player.Discard(card);
+	                }
+	            
+	            }
+	            this.UpdateNbActionsRemaining();
+	            return new Cure(disease);
+	            
+	            
+	        }
+	    }
+	    return null;
+	}
+
+	
 }
