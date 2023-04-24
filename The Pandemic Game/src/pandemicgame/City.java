@@ -9,12 +9,11 @@ import java.util.HashMap;
  * Class City representing a city in the game
  */
 public class City {
-	
 	private String name ;
 	private Boolean researchStation = false ;
 	private ArrayList<Disease> diseases = new ArrayList<Disease>() ;
 	private HashMap<Disease,Boolean> OutBreakInfectionPerDisease = new HashMap<Disease, Boolean>() ;
-	
+	private ArrayList<Cube> cubes = new ArrayList<Cube>();
 	
 	/**
 	 * class constructor
@@ -85,10 +84,64 @@ public class City {
 	 */
 	public void removeDisease(Disease disease) throws IndexOutOfBoundsException {
 		if (this.getDiseases().isEmpty()) throw new IndexOutOfBoundsException() ;
-		this.getDiseases().remove(disease) ;} 
+		this.getDiseases().remove(disease) ;}
 	
-
-}
+	/**
+	 * returns the number of cubes of a certain disease present in the city
+	 * @param disease the disease
+	 * @return the number of cubes of the disease present in the city
+	 */
+	public int getCubeCount(Disease disease) {
+	    int count = 0;
+	    for (Cube cube : this.cubes) {
+	        if (cube.getDisease() == disease) {
+	            count++;
+	        }
+	    }
+	    return count;
+	}
+	
+	/**
+	 * adds a cube of a certain disease to the city
+	 * @param disease the disease
+	 */
+	public void addCube(Disease disease) {
+	    if (!this.isOutbreakOfInfection(disease) && getCubeCount(disease) < 3) {
+	        cubes.add(new Cube(disease));
+	    } else {
+	        declareOutbreakOfInfection(disease);
+	    }
+	}
+	
+	/**
+	 * removes a cube of a certain disease from the city
+	 * @param disease the disease
+	 * @throws IllegalArgumentException if there are no cubes of the disease in the city
+	 */
+	public void removeCube(Disease disease) throws IllegalArgumentException {
+	    boolean removed = false;
+	    for (int i = 0; i < this.cubes.size(); i++) {
+	        if (cubes.get(i).getDisease() == disease) {
+	            cubes.remove(i);
+	            removed = true;
+	            break;
+	        }
+	    }
+	    if (!removed) {
+	        throw new IllegalArgumentException("There are no cubes of " + disease + " in " + name);
+	    }
+	
+	}
+	
+	/**
+	 * removes all cubes of a certain disease from the city
+	 * @param disease the disease
+	 */
+	public void removeAllCubes(Disease disease) {
+	    this.cubes.removeIf(cube -> cube.getDisease() == disease);
+	}
+	
+	
 	
 	
 	
