@@ -19,8 +19,36 @@ public class Doctor extends Player {
      * @param city The city where the disease is being treated
      * @param disease The disease to be treated
      */
-    public void treatingDisease(City city, Disease disease){
-        city.removeDisease(disease);
+    public void TreatDisease(Disease disease) {
+		//check if the disaese is cured 
+	 if (super.NBActionsRemaining >0 && !super.position.isEradicated(disease)) {
+			super.position.removeAllCubes(disease);
+		    super.UpdateNbActionsRemaining();
+	 }
+    }
+    
+    public void TreatDiseaseWithNoUpdateAction(Disease disease) {
+    	boolean cureFound = false;
+	    boolean cubesFound = false;
+	    
+	    // Check if there is a cure for the disease
+	    for (Cure cure : this.cures) {
+	        if (cure.getDisease() == disease) {
+	            cureFound = true;
+	        }
+	    }
+	    
+	 // Check if there are cubes of the disease in the city
+	    for (Cube cube : this.cubes) {
+	        if (cube.getDisease() == disease) {
+	            cubesFound = true;
+	        }
+	    }
+	    
+	    if (cubesFound && CureFound) {
+	    	super.position.removeAllCubes(disease);
+	    }
+    	
     }
 
 }

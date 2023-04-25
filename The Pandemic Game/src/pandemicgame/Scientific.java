@@ -37,12 +37,9 @@ public class Scientific extends Player{
 	                if ( card.getDisease() == disease) {
 	                    super.Discard(card);
 	                }
-	            
 	            }
 	            super.UpdateNbActionsRemaining();
 	            return new Cure(disease);
-	            
-	            
 	        }
 	    }
 	    return null;
