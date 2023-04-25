@@ -14,7 +14,7 @@ public class City {
 	private ArrayList<Disease> diseases = new ArrayList<Disease>() ;
 	private HashMap<Disease,Boolean> OutBreakInfectionPerDisease = new HashMap<Disease, Boolean>() ;
 	private ArrayList<Cube> cubes = new ArrayList<Cube>();
-	
+	private ArrayList<Cure> cures = new ArrayList<Cure>();
 	/**
 	 * class constructor
 	 * @param name name of the city
@@ -113,6 +113,7 @@ public class City {
 	    }
 	}
 	
+	
 	/**
 	 * removes a cube of a certain disease from the city
 	 * @param disease the disease
@@ -139,6 +140,41 @@ public class City {
 	 */
 	public void removeAllCubes(Disease disease) {
 	    this.cubes.removeIf(cube -> cube.getDisease() == disease);
+	}
+	
+	public ArrayList<Cure> getCures(){
+		return this.cures;
+	}
+	
+	public void addCure(Disease disease) {
+		cubes.add(new Cure(disease));
+	}
+	
+	
+	public boolean isEradicated(Disease disease) {
+	    boolean cureFound = false;
+	    boolean cubesFound = false;
+	    
+	    // Check if there is a cure for the disease
+	    for (Cure cure : this.cures) {
+	        if (cure.getDisease() == disease) {
+	            cureFound = true;
+	            break;
+	        }
+	    }
+	    
+	    // Check if there are cubes of the disease in the city
+	    for (Cube cube : this.cubes) {
+	        if (cube.getDisease() == disease) {
+	            cubesFound = true;
+	            break;
+	        }
+	    }
+	    
+	    return cureFound && !cubesFound;
+	}
+
+		
 	}
 	
 	
