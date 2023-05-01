@@ -1,6 +1,5 @@
 package pandemicgame;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
@@ -18,10 +17,10 @@ import org.json.JSONTokener;
 
 public class World {
 	
-	public HashMap<City,ArrayList<City>> cities  = new HashMap<City,ArrayList<City>>() ;
-	public ArrayList<Disease> diseases  = new ArrayList<Disease>(Arrays.asList(Disease.values()));
-	public Integer infectionRate = 2;
-	public Integer outBreaks = 0;
+	private HashMap<City,ArrayList<City>> cities  = new HashMap<City,ArrayList<City>>() ;
+	private ArrayList<Disease> diseases  = new ArrayList<Disease>(Arrays.asList(Disease.values()));
+	private Integer infectionRate = 2;
+	private Integer outBreaks = 0;
 	public Stack<InfectionCard> infectionDeck =  new Stack<InfectionCard>() ;
 	public Stack<InfectionCard> infectionDiscardPile = new Stack<InfectionCard>();
 	public Stack<PlayerCard> playerDeck = new Stack<PlayerCard>() ;
@@ -33,45 +32,57 @@ public class World {
  * @param string
  * @throws FileNotFoundException if file not found
  */
-public World (String cities) throws FileNotFoundException {
-	
-		
-		FileReader reader = new FileReader(cities);
-		JSONObject map = new JSONObject(new JSONTokener(reader));
-		
-		//adding cities
-		Iterator<String> entries = map.keys();
-		while(entries.hasNext()) {
-			String entryKey = entries.next();
-			if (! entryKey.equals("neighbors"))
-					break ;
-		    JSONObject entry = map.getJSONObject(entryKey) ;
-		    Iterator<String> datakeys = entry.keys();
-		    while(datakeys.hasNext()) {
-		    	String cityName = datakeys.next();
-		    	City city = new City(cityName) ;
-		    	this.cities.put(city, new ArrayList<City>()) ;
-		   }	
-		}
-		//adding neighbors to each city
-		Iterator<String> entries2 = map.keys() ;
-		while(entries.hasNext()) {
-			String entryKey = entries2.next() ;
-			if (! entryKey.equals("cities"))
-				break ;
-			JSONObject entry = map.getJSONObject(entryKey) ;
-			Iterator<String> datakeys = entry.keys();
-			while(datakeys.hasNext()) {
-				City myCity = null ;
-				String cityName = datakeys.next();
-				for (City city : this.cities.keySet()) {
-					if (city.getName().equals(cityName))
-						myCity = city ;		
-				}
-				JSONArray a = entry.getJSONArray(cityName);
-				for (Object  chaine : a) this.cities.get(myCity).add(new City((String)chaine)) ;
-			 }
-		 }
+	public World (String cities) throws FileNotFoundException {
+	    
+	       
+        FileReader reader = new FileReader(cities);
+        JSONObject map = new JSONObject(new JSONTokener(reader));
+       
+        //adding cities
+        Iterator<String> entries = map.keys();
+        while(entries.hasNext()) {
+            String entryKey = entries.next();
+            if ( entryKey.equals("neighbors"))
+                    break ;
+            JSONObject entry = map.getJSONObject(entryKey) ;
+            Iterator<String> datakeys = entry.keys();
+            while(datakeys.hasNext()) {
+                String cityName = datakeys.next();
+                City city = new City(cityName) ;
+                this.cities.put(city, new ArrayList<City>()) ;
+           }   
+        }
+        //adding neighbors to each city
+        Iterator<String> entries2 = map.keys() ;
+            entries2.next();
+            String entryKey = entries2.next() ;
+            JSONObject entry = map.getJSONObject(entryKey) ;
+            Iterator<String> datakeys = entry.keys();
+            while(datakeys.hasNext()) {
+                City myCity = null ;
+                String cityName = datakeys.next();
+                for (City city : this.cities.keySet()) {
+                    if (city.getName().equals(cityName)) {
+                        myCity = city ;
+                        //if (myCity == null) break ;
+                        }
+                        
+                }
+                JSONArray a = entry.getJSONArray(cityName);
+               
+                
+               
+                ArrayList<String> voisines_name = new ArrayList<String>() ;
+                ArrayList<City> voisines = new ArrayList<City>() ;
+               
+                for (Object  chaine : a) voisines_name.add((String) chaine) ;
+                for (String name : voisines_name) voisines.add(new City(name)) ;
+                //System.out.println(myCity.getName()+" has "+voisines.get(0).getName()+" as n1") ;
+               
+                this.cities.put(myCity, voisines) ;
+                
+               
+             }
 	}
 	/**
 	 * return list of the cities present in world
