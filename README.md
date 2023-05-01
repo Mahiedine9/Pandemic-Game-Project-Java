@@ -17,11 +17,11 @@
 ## Livrable 1 
 
 ### Atteinte des objectifs
-✔️  UML fait
-✔️  Classe City fait 
-✔️  Classe World fait. Constructeur JSON ne foncionne pas encore
-✔️  Classes des Tests fait
-✔️ Constructeur fait et testé ( affihcée dans test/WorldTest :l'ensemble des villes avec pour chacune  la liste de leur voisines)
+- ✔️  UML fait
+- ✔️  Classe City fait 
+- ✔️  Classe World fait.
+- ✔️  Classes des Tests fait
+- ✔️ Constructeur fait et testé ( affihcée dans test/WorldTest :l'ensemble des villes avec pour chacune  la liste de leur voisines)
 
 
 ## Livrable 2
