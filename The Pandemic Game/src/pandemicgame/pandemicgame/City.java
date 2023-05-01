@@ -52,7 +52,7 @@ public class City {
 	 *  @param the disease
 	 *  @return true it is an outbreak , false otherwise.
 	 */
-	public Boolean isourBreakOfInfection(Disease disease)  {return this.OutBreakInfectionPerDisease.get(disease);}
+	public Boolean isoutBreakOfInfection(Disease disease)  {return this.OutBreakInfectionPerDisease.get(disease);}
 	
 	/**
 	 * declares city as an outBreak of a certain disease
@@ -75,7 +75,7 @@ public class City {
 		for (Disease presentDisease : this.diseases) {
 			if (presentDisease.equals(disease) ) howManyCubes ++ ;
 		}
-		if (howManyCubes < 3 && ! this.isourBreakOfInfection(disease))  this.diseases.add(disease) ; 
+		if (howManyCubes < 3 && ! this.isoutBreakOfInfection(disease))  this.diseases.add(disease) ; 
 		else this.declareOutBReakOfInfection(disease) ;}
 	
 	/**
@@ -106,10 +106,10 @@ public class City {
 	 * @param disease the disease
 	 */
 	public void addCube(Disease disease) {
-	    if (!this.isOutbreakOfInfection(disease) && getCubeCount(disease) < 3) {
+	    if (!this.isoutBreakOfInfection(disease) && getCubeCount(disease) < 3) {
 	        cubes.add(new Cube(disease));
 	    } else {
-	        declareOutbreakOfInfection(disease);
+	    	declareOutBReakOfInfection(disease);
 	    }
 	}
 	
@@ -147,7 +147,7 @@ public class City {
 	}
 	
 	public void addCure(Disease disease) {
-		cubes.add(new Cure(disease));
+		this.cures.add(new Cure(disease));
 	}
 	
 	
