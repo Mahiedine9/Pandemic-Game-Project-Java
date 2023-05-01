@@ -55,7 +55,7 @@
 - dans le cadre de rattraper notre travail, Nous avons commencer à corriger les livrable 1 et 2.
 
 ## Semaine 9
-- pour le livrable 2. il nous reste quelques modifications àfin de pouvoir lancer la mini-partie prévue pour le livrable 2.
+- pour le livrable 2. il nous reste quelques modifications àfin de pouvoir lancer la mini-partie prévue pour ce dernier.
 
 ## Semaine 10
 
