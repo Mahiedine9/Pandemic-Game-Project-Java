@@ -38,15 +38,11 @@
 
 ## Livrable 3
 
-### Atteinte des objectifs
 
-### Difficultés restant à résoudre
 
 ## Livrable 4
 
-### Atteinte des objectifs
 
-### Difficultés restant à résoudre
 
 # Journal de bord
 
