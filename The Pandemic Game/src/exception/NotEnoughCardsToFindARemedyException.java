@@ -1,4 +1,4 @@
-package pandemicgame;
+package exception;
 
 public class NotEnoughCardsToFindARemedyException extends Exception {
 	public NotEnoughCardsToFindARemedyException( ) {

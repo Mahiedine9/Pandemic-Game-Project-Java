@@ -1,5 +1,8 @@
 package pandemicgame;
 
+import exception.NoMoreResearchStationAvailableException;
+import exception.NotAResearchStationException;
+
 public class Expert extends Player {
 	
 	public Expert (String name, City city, World world) {

@@ -2,6 +2,9 @@ package pandemicgame;
 
 import java.util.ArrayList;
 
+import exception.NotAResearchStationException;
+import exception.NotEnoughCardsToFindARemedyException;
+
 public class Scientific extends Player {
 	
 	public Scientific  (String name, City city, World world) {

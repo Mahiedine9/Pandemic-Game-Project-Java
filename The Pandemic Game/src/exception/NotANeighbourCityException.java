@@ -1,4 +1,4 @@
-package pandemicgame;
+package exception;
 
 public class NotANeighbourCityException extends Exception {
 	

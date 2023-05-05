@@ -1,4 +1,4 @@
-package pandemicgame;
+package exception;
 
 public class PlayerDoesNotHaveProperCardException extends Exception {
 	public PlayerDoesNotHaveProperCardException() {

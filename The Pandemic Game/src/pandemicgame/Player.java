@@ -2,6 +2,12 @@ package pandemicgame;
 
 import java.util.ArrayList;
 
+import exception.NoMoreResearchStationAvailableException;
+import exception.NotANeighbourCityException;
+import exception.NotAResearchStationException;
+import exception.NotEnoughCardsToFindARemedyException;
+import exception.PlayerDoesNotHaveProperCardException;
+
 public abstract class Player {
 	
 	protected String name ;
