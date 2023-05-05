@@ -36,19 +36,26 @@ public class PandemicGame {
 			this.world.addInfectionCard(carteinfection) ; }
 		
 		this.world.shuffleInfectionDeck();
+		
 			
 		for (City city : this.world.getCities()) {
 			randomIndex = rand.nextInt(diseaseList.size());
 			randomDisease = diseaseList.get(randomIndex);
 			PlayerCard cartedisease = new PlayerCard(city, randomDisease) ;
-			this.world.addPlayabaleCard(cartedisease) ; }
+			this.world.addPlayableCard(cartedisease) ; }
+		
+		this.world.addPlayableCard(new EpidemicCard()) ;
+		this.world.addPlayableCard(new EpidemicCard()) ;
+		this.world.addPlayableCard(new EpidemicCard()) ;
+		this.world.addPlayableCard(new EpidemicCard()) ;
 		
 		this.world.shufflePlayerDeck();
-			
-			
+		
+		
+		
 		}
 		
-	}
+	
 	
 	
 	public World getWorld() { return this.world ; }
