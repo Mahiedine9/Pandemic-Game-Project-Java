@@ -131,8 +131,12 @@ public class World {
 	 * @return the card drawen
 	 */
 	
-	public void addInfectionCard(InfectionCard carte) {}
-	public void addPlayerCard(PlayerCard carte) {}
+	public void addInfectionCard(InfectionCard carte) {
+		this.infectionDeck.add(carte) ;
+	}
+	public void addPlayableCard(PlayableCard carte) {
+		this.playerDeck.add(carte) ;
+	}
 	
 	public Stack<PlayableCard> getPlayerDeck() {
 		return this.playerDeck ;
@@ -141,13 +145,13 @@ public class World {
 	public Stack<InfectionCard> getInfectionDeck() {
 		return this.infectionDeck ;
 	}
-	public PlayerCard drawPlayerDeck () {
-		 return (PlayerCard) this.playerDeck.pop();
+	public PlayableCard drawPlayerDeck () {
+		 return   this.playerDeck.pop();
 	}
 			//this.playerDiscardPile.push((PlayerCard) carte) ;}
 	
 	public InfectionCard drawInfectionDeck () {
-		return  this.infectionDeck.pop();
+		  return  this.infectionDeck.pop();
 	}
 	
 	public void DiscardPlayableCard (PlayerCard carte ) {
