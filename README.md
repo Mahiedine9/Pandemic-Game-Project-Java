@@ -137,6 +137,7 @@ N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se
 - pour le livrable 2. il nous reste quelques modifications àfin de pouvoir lancer la mini-partie prévue pour ce dernier.
 
 ## Semaine 10
+- Nous avons demandé au professeur d'évualuer notre travail jusq'au livrabel 2. Une fois l'évaluation faite, Nous allons attacker les attendues pour le livrable 3.
 
 ## Semaine 11
 
