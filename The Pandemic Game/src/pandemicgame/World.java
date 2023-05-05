@@ -131,7 +131,8 @@ public class World {
 	 * @return the card drawen
 	 */
 	
-	public void addInfectionCard(InfectionCard carte) {
+	public void addInfectionCard(InfectionCard carte) {}
+	public void addPlayerCard(PlayerCard carte) {}
 	
 	public Stack<PlayableCard> getPlayerDeck() {
 		return this.playerDeck ;
