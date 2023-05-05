@@ -8,6 +8,12 @@ import java.util.Collections;
 
 import org.junit.jupiter.api.Test;
 
+import exception.NoMoreResearchStationAvailableException;
+import exception.NotANeighbourCityException;
+import exception.NotAResearchStationException;
+import exception.NotEnoughCardsToFindARemedyException;
+import exception.PlayerDoesNotHaveProperCardException;
+
 class PlayerTest {
 
 	@Test
