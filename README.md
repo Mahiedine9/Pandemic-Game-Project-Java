@@ -110,7 +110,7 @@ someone@somewhere/../l2s4-projet-2023:~$ java pandemicgame.PandemicGameMain
  - Dans le main : 
   - ✔️  Créer 4 joueurs, un pour chaque rôle, et les placer sur une ville ;
   - ✔️  Tirer 2 cartes de la pile des cartes infection et effectuer les actions associées (donc être capable de dérouler une phase d'infection, au moins manuellement) ;
-  - ✔️ Pour chaque joueur : tirer 2 cartes de la pile des cartes joueur et les ajouter à la main du joueur. Si une carte épidémie est tirée, il faut résoudre son utilisation correctement.
+  - ⏳ Pour chaque joueur : tirer 2 cartes de la pile des cartes joueur et les ajouter à la main du joueur. Si une carte épidémie est tirée, il faut résoudre son utilisation correctement.
 
 
 ## Livrable 3
