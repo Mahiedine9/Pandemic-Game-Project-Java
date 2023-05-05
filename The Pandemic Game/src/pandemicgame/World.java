@@ -15,16 +15,20 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 
+
+
 public class World {
 	
 	private HashMap<City,ArrayList<City>> cities  = new HashMap<City,ArrayList<City>>() ;
 	private ArrayList<Disease> diseases  = new ArrayList<Disease>(Arrays.asList(Disease.values()));
+	private ArrayList<Disease> remedies  = new ArrayList<Disease>();
 	private Integer infectionRate = 2;
 	private Integer outBreaks = 0;
-	public Stack<InfectionCard> infectionDeck =  new Stack<InfectionCard>() ;
-	public Stack<InfectionCard> infectionDiscardPile = new Stack<InfectionCard>();
-	public Stack<PlayerCard> playerDeck = new Stack<PlayerCard>() ;
-	public Stack<PlayerCard> playerDiscardPile = new Stack<PlayerCard>();
+	private Integer researchStationsAvailable = 6 ;
+	private Stack<InfectionCard> infectionDeck =  new Stack<InfectionCard>() ;
+	private Stack<InfectionCard> infectionDiscardPile = new Stack<InfectionCard>();
+	private Stack<PlayableCard> playerDeck = new Stack<PlayableCard>() ;
+	private Stack<PlayableCard> playerDiscardPile = new Stack<PlayableCard>();
 	
 	
  /**
@@ -103,6 +107,8 @@ public class World {
 	 */
 	public Integer getInfectionRate() { return this.infectionRate ; }
 	
+	public ArrayList<Disease> getDiseases() { return this.diseases ; }
+	
 	/**
 	 * increases infection rate by one 
 	 */
@@ -124,35 +130,60 @@ public class World {
 	 * @param cardType the type of deck
 	 * @return the card drawen
 	 */
-	public Card drawDeck (Card cardType) {
-		Card carte ;
-		if (cardType.getClass().equals(InfectionCard.class)) { 
-			 carte = (InfectionCard) this.infectionDeck.pop();
-			this.infectionDiscardPile.push((InfectionCard) carte) ;}
-		else {
-			 carte = (PlayerCard) this.playerDeck.pop();
-			this.playerDiscardPile.push((PlayerCard) carte) ;}
-		return carte ;
-	 }
 	
-	/**
-	 * shuffles either deck or Discard pile in the game
-	 * @param cardType PlayCard or InfectionCard
-	 * @param discard true to shuffle the Discard Pile of the respective cardType
-	 */
-	public void shuffleDeck(Card cardType, Boolean discard) {
-		
-		if (cardType.getClass().equals(InfectionCard.class)) { 
-			if (discard)  Collections.shuffle(this.infectionDiscardPile);
-			else Collections.shuffle(this.infectionDeck) ;
-			}
-		else if (discard) Collections.shuffle(this.playerDiscardPile);
-		else  Collections.shuffle(this.playerDeck) ;
+	public void addInfectionCard(InfectionCard carte) {
+	
+	public Stack<PlayableCard> getPlayerDeck() {
+		return this.playerDeck ;
 	}
 	
+	public Stack<InfectionCard> getInfectionDeck() {
+		return this.infectionDeck ;
+	}
+	public PlayerCard drawPlayerDeck () {
+		 return (PlayerCard) this.playerDeck.pop();
+	}
+			//this.playerDiscardPile.push((PlayerCard) carte) ;}
+	
+	public InfectionCard drawInfectionDeck () {
+		return  this.infectionDeck.pop();
+	}
+	
+	public void DiscardPlayableCard (PlayerCard carte ) {
+		this.playerDiscardPile.push((PlayerCard) carte) ;
+		}
+	
+	public void DiscardInfectionCard(InfectionCard carte ) {
+		this.infectionDiscardPile.push(carte) ;
+		}
+	
+    public void shufflePlayerDeck() {
+		  Collections.shuffle(this.playerDeck) ;
+	}
+    
+    public void shuffleInfectionDeck() {
+		  Collections.shuffle(this.infectionDeck) ;
+	}
 	
 	public void eradicateDisease(Disease disease) {
 		this.diseases.remove(disease) ;
+	}
+	
+	public Integer getResearchStationsAvailable() {
+		return this.researchStationsAvailable ;
+	}
+	
+	public void countUsedResearchStation() {
+		this.researchStationsAvailable -- ;
+	}
+	
+	public ArrayList<Disease> getRemedies() {
+		return this.remedies ;
+	}
+	
+	public void addRemedy(Disease disease) {
+		if ( ! this.remedies.contains((disease)))
+		    this.remedies.add(disease) ;
 	}
 	
 	

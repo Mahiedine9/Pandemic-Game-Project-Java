@@ -1,13 +1,17 @@
+package old;
+
+import pandemicgame.City;
+
 /**
  * The Expert class represents the role of an Expert in the Pandemic game.
  * The Expert can build a research station in a city without having to discard a City card.
  */
-public class Expert extends Player {
+public class Expert2 extends Player {
 
     /**
      * Constructor for the Expert class that initializes a new Expert with default values.
      */
-    public Expert(){
+    public Expert2(){
         super();
     }
 

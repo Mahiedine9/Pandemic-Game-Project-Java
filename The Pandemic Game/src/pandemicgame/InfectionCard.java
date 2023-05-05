@@ -1,19 +1,19 @@
 package pandemicgame;
 
-
-public class InfectionCard implements Card {
+public class InfectionCard  {
 	private City city;
+	private Disease disease ;
 	
 	public InfectionCard(City city, Disease disease){
 		this.city = city;
 		this.disease = disease;
 			
 	}
-	public City GetCity() {
+	public City getCity() {
 		return this.city;
 	}
-	public Disease GetDisease() {
-		return this.disease();
+	public Disease getDisease() {
+		return this.disease;
 	}
 
 }

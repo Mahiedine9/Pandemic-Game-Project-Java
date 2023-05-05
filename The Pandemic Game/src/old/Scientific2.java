@@ -1,13 +1,17 @@
+package old;
+
+import pandemicgame.Disease;
+
 /**
  * The Scientific class represents a player who is able to cure diseases in the game Pandemic.
  * This class extends the Player class and has a method CureDisease which allows the player to find a cure for a given disease.
  */
-public class Scientific extends Player{
+public class Scientific2 extends Player{
 
     /**
      * Constructs a new Scientific player.
      */
-    public Scientific(){
+    public Scientific2(){
         super();
     }
 
@@ -21,7 +25,7 @@ public class Scientific extends Player{
      * @param disease The disease to find a cure for.
      * @return A new instance of the Cure class representing the cure found.
      */
-    public Cure CureDisease() {
+    public Cure2 CureDisease() {
 	    // Loop through all the possible diseases
 	    for (Disease disease : Disease.values()) {
 	        // Count how many cards the player has for this disease
@@ -39,7 +43,7 @@ public class Scientific extends Player{
 	                }
 	            }
 	            super.UpdateNbActionsRemaining();
-	            return new Cure(disease);
+	            return new Cure2(disease);
 	        }
 	    }
 	    return null;

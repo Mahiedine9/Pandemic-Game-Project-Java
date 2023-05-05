@@ -1,12 +1,16 @@
-public class Game {
-    private List<Cure> curesFound = new ArrayList<>();
+package old;
 
-    public void addCure(Cure cure) {
+import pandemicgame.Disease;
+
+public class Game2 {
+    private List<Cure2> curesFound = new ArrayList<>();
+
+    public void addCure(Cure2 cure) {
         curesFound.add(cure);
     }
 
     public boolean hasCure(Disease disease) {
-        for (Cure cure : curesFound) {
+        for (Cure2 cure : curesFound) {
             if (cure.getDisease() == disease) {
                 return true;
             }

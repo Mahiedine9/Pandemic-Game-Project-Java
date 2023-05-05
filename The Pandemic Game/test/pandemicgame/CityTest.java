@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+
+
 class CityTest {
 	
 	private City city = new City("Lille") ;
@@ -13,7 +15,7 @@ class CityTest {
 	public void testCreationAndGetName() {
 		assertEquals(City.class, this.city.getClass()) ;
 		assertEquals("Lille", this.city.getName()) ;
-		for (Disease disease : Disease.values()) assertFalse(city.isourBreakOfInfection(disease)) ; 
+		for (Disease disease : Disease.values()) assertFalse(city.isOutBreakOfInfection(disease)) ; 
 	}
 	
 	@Test
@@ -34,9 +36,9 @@ class CityTest {
 	@Test
 	public void  testisourBreakOfInfectionAndDeclareOutBReakOfInfection() {
 		Disease d = Disease.DISEASE1 ;
-		assertFalse(this.city.isourBreakOfInfection(d)) ;
+		assertFalse(this.city.isOutBreakOfInfection(d)) ;
 		this.city.declareOutBReakOfInfection(d) ;
-		assertTrue(this.city.isourBreakOfInfection(d)) ;
+		assertTrue(this.city.isOutBreakOfInfection(d)) ;
 		
 	}
 	

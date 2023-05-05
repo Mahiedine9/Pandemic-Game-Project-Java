@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+
+
 /**
  * Class City representing a city in the game
  */
@@ -13,8 +15,8 @@ public class City {
 	private Boolean researchStation = false ;
 	private ArrayList<Disease> diseases = new ArrayList<Disease>() ;
 	private HashMap<Disease,Boolean> OutBreakInfectionPerDisease = new HashMap<Disease, Boolean>() ;
-	private ArrayList<Cube> cubes = new ArrayList<Cube>();
-	private ArrayList<Cure> cures = new ArrayList<Cure>();
+	//private ArrayList<Cube2> cubes = new ArrayList<Cube2>();
+	//private ArrayList<Cure2> cures = new ArrayList<Cure2>();
 	/**
 	 * class constructor
 	 * @param name name of the city
@@ -47,12 +49,14 @@ public class City {
 	 */
 	public void turnResearchStation() { this.researchStation = true ;}
 	
+	public void turnNotResearchStation() { this.researchStation = false ;}
+	
 	/**
 	 * tells if city had an outbreak of infection for a certain disease
 	 *  @param the disease
 	 *  @return true it is an outbreak , false otherwise.
 	 */
-	public Boolean isoutBreakOfInfection(Disease disease)  {return this.OutBreakInfectionPerDisease.get(disease);}
+	public Boolean isOutBreakOfInfection(Disease disease)  {return this.OutBreakInfectionPerDisease.get(disease);}
 	
 	/**
 	 * declares city as an outBreak of a certain disease
@@ -75,7 +79,7 @@ public class City {
 		for (Disease presentDisease : this.diseases) {
 			if (presentDisease.equals(disease) ) howManyCubes ++ ;
 		}
-		if (howManyCubes < 3 && ! this.isoutBreakOfInfection(disease))  this.diseases.add(disease) ; 
+		if (howManyCubes < 3 && ! this.isOutBreakOfInfection(disease))  this.diseases.add(disease) ; 
 		else this.declareOutBReakOfInfection(disease) ;}
 	
 	/**
@@ -85,12 +89,13 @@ public class City {
 	public void removeDisease(Disease disease) throws IndexOutOfBoundsException {
 		if (this.getDiseases().isEmpty()) throw new IndexOutOfBoundsException() ;
 		this.getDiseases().remove(disease) ;}
+}
 	
 	/**
 	 * returns the number of cubes of a certain disease present in the city
 	 * @param disease the disease
 	 * @return the number of cubes of the disease present in the city
-	 */
+	
 	public int getCubeCount(Disease disease) {
 	    int count = 0;
 	    for (Cube cube : this.cubes) {
@@ -104,9 +109,9 @@ public class City {
 	/**
 	 * adds a cube of a certain disease to the city
 	 * @param disease the disease
-	 */
+	 
 	public void addCube(Disease disease) {
-	    if (!this.isoutBreakOfInfection(disease) && getCubeCount(disease) < 3) {
+	    if (!this.isOutBreakOfInfection(disease) && getCubeCount(disease) < 3) {
 	        cubes.add(new Cube(disease));
 	    } else {
 	    	declareOutBReakOfInfection(disease);
@@ -118,7 +123,7 @@ public class City {
 	 * removes a cube of a certain disease from the city
 	 * @param disease the disease
 	 * @throws IllegalArgumentException if there are no cubes of the disease in the city
-	 */
+	 
 	public void removeCube(Disease disease) throws IllegalArgumentException {
 	    boolean removed = false;
 	    for (int i = 0; i < this.cubes.size(); i++) {
@@ -137,7 +142,7 @@ public class City {
 	/**
 	 * removes all cubes of a certain disease from the city
 	 * @param disease the disease
-	 */
+	 
 	public void removeAllCubes(Disease disease) {
 	    this.cubes.removeIf(cube -> cube.getDisease() == disease);
 	}
@@ -176,7 +181,7 @@ public class City {
 
 		
 	}
-	
+	 */
 	
 	
 	

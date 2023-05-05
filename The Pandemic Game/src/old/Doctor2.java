@@ -1,13 +1,17 @@
+package old;
+
+import pandemicgame.Disease;
+
 /**
  * The Doctor class is a subclass of the Player class and represents the doctor character in the Pandemic game.
  * The doctor has a special ability that allows them to remove all cubes of a disease in a given city at once, even if no cure has been found.
  */
-public class Doctor extends Player {
+public class Doctor2 extends Player {
 
     /**
      * Constructor for the Doctor class that initializes a new doctor by calling the constructor of the superclass Player.
      */
-    public Doctor(){
+    public Doctor2(){
         super();
     }
 
@@ -32,14 +36,14 @@ public class Doctor extends Player {
 	    boolean cubesFound = false;
 	    
 	    // Check if there is a cure for the disease
-	    for (Cure cure : this.cures) {
+	    for (Cure2 cure : this.cures) {
 	        if (cure.getDisease() == disease) {
 	            cureFound = true;
 	        }
 	    }
 	    
 	 // Check if there are cubes of the disease in the city
-	    for (Cube cube : this.cubes) {
+	    for (Cube2 cube : this.cubes) {
 	        if (cube.getDisease() == disease) {
 	            cubesFound = true;
 	        }
