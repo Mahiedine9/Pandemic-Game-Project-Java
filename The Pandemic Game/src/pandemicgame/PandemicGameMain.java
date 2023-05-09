@@ -7,27 +7,57 @@ import java.util.Iterator;
 public class PandemicGameMain {
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		
+		if (args.length != 1) {
+        System.out.println("Usage: java PandemicGameMain <JSON file path>");
+        return;
+        }
 		// création du plateau du jeu et de jeu
-		World myWorld = new World("The Pandemic Game/files/carte1.json") ;
+		World myWorld = new World(args[0]) ;
+		// création du jeu
+		PandemicGame game = new PandemicGame(myWorld) ;
 		
 		
-		// selection d'un ville
+		Scanner sc = new Scanner(System.in);
+        int nbPlayers = 0;
+        
+        while (nbPlayers < 1 || nbPlayers > 4) {
+        	System.out.println("Combien de joueurs voulez-vous créer ? (1 à 4 joueurs)");
+        	if (sc.hasNextInt()) {
+        		nbPlayers = sc.nextInt();
+        	} else {
+        		System.out.println("Veuillez entrer un nombre entre 1 et 4.");
+        		sc.next();
+        	}
+        }
+        
+        
+		
+		// sélection d'une ville
 		City city = myWorld.getCities().get(0) ;
 		
-		// création des 4 joueurs
-		Globetrotter timo = new Globetrotter("Timo", city, myWorld) ;
-		Globetrotter leon = new Globetrotter("Leon", city, myWorld) ;
-		Globetrotter john = new Globetrotter("John", city, myWorld) ;
-		Globetrotter lucas = new Globetrotter("Lucas", city, myWorld) ;
+		// création des joueurs
 		ArrayList<Player> players = new ArrayList<Player>() ;
-		players.add(timo) ;
-		players.add(leon) ;
-		players.add(john) ;
-		players.add(lucas) ;
 		
-		// création et initiation du jeu
-		PandemicGame game = new PandemicGame(myWorld, players) ;
+		for (int i = 0; i < nbPlayers; i++) {
+			System.out.println("Création du joueur #" + (i+1));
+			System.out.println("Entrez le nom du joueur :");
+			String playerName = sc.next();
+			System.out.println("Entrez le rôle du joueur (doctor, scientist, expert, globetrotter) :");
+			String playerRole = sc.next();
+			
+			Player newPlayer = createPlayer(playerName, playerRole, city, myWorld);
+			
+			if (newPlayer != null) {
+				players.add(newPlayer);
+			} else {
+				System.out.println("Le rôle entré n'est pas valide.");
+				i--; // on décrémente i pour recréer un joueur
+			}
+		}
+		
+		sc.close();
+		
+		// initialisation du jeu
 		game.initiate() ;
 		System.out.print("Plteau de jeu a été crée. En ce moment il exist "+myWorld.getPlayerDeck().size()+" cartes joueuers (dont cartes épidimie) et "+myWorld.getInfectionDeck().size()+" cartes infection.") ;
 		System.out.println() ;

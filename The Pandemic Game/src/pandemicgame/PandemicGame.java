@@ -12,11 +12,43 @@ public class PandemicGame {
 	private Iterator<Player> currentlyPlaying ;
 	private HashMap<Disease, Integer> diseaseCubes ;
 	
-	public PandemicGame(World world ,ArrayList<Player> players ) {
+	public PandemicGame(World world ) {
 		this.world = world ;
-		this.players = players ;
+		this.players = new ArrayList<Player>();
 		this.currentlyPlaying = players.iterator() ;
-		}
+	}
+
+
+	public static Player createPlayer(String name, String role, World world) {
+    List<City> cities = world.getCities();
+    Random random = new Random();
+
+    // Choisir une ville au hasard parmi les villes disponibles
+    City city = cities.get(random.nextInt(cities.size()));
+	Player player;
+    // Créer le joueur avec le rôle, le nom et la ville sélectionnés
+    switch (role.toUpperCase()) {
+        case "DOCTOR":
+             player = new Doctor(name, city, world);
+			 this.players.add(player);
+			 return player;
+        case "EXPERT":
+            player = new Expert(name, city, world);
+			this.players.add(player);
+			return player;
+        case "SCIENTIFIC":
+            player = new Scientific(name, city, world);
+			this.players.add(player);
+			return player;
+        case "GLOBETROTTER":
+            player = new Globetrotter(name, city, world);
+			this.players.add(player);
+			return player;
+        default:
+            throw new IllegalArgumentException("Role not recognized");
+    }
+}
+
 		
 	public void initiate() {
 		
