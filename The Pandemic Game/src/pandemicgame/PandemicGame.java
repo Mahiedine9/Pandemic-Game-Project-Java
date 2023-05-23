@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 public class PandemicGame {
@@ -19,30 +20,30 @@ public class PandemicGame {
 	}
 
 
-	public static Player createPlayer(String name, String role, World world) {
-    List<City> cities = world.getCities();
+	public  Player createPlayer(String name, String role, World world, ArrayList<Player> players) {
+    ArrayList<City> cities = world.getCities();
     Random random = new Random();
 
     // Choisir une ville au hasard parmi les villes disponibles
     City city = cities.get(random.nextInt(cities.size()));
 	Player player;
-    // Créer le joueur avec le rôle, le nom et la ville sélectionnés
+    // Crï¿½er le joueur avec le rï¿½le, le nom et la ville sï¿½lectionnï¿½s
     switch (role.toUpperCase()) {
         case "DOCTOR":
              player = new Doctor(name, city, world);
-			 this.players.add(player);
+			 players.add(player);
 			 return player;
         case "EXPERT":
             player = new Expert(name, city, world);
-			this.players.add(player);
+			players.add(player);
 			return player;
         case "SCIENTIFIC":
             player = new Scientific(name, city, world);
-			this.players.add(player);
+			players.add(player);
 			return player;
         case "GLOBETROTTER":
             player = new Globetrotter(name, city, world);
-			this.players.add(player);
+			players.add(player);
 			return player;
         default:
             throw new IllegalArgumentException("Role not recognized");
