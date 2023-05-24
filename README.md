@@ -93,7 +93,7 @@ someone@somewhere/../l2s4-projet-2023:~$ java pandemicgame.PandemicGameMain
 
 ## Livrable 1 
 
-### Atteinte des objectifs
+
 - ✔️  UML fait
 - ✔️  Classe City fait 
 - ✔️  Classe World fait.
@@ -103,27 +103,35 @@ someone@somewhere/../l2s4-projet-2023:~$ java pandemicgame.PandemicGameMain
 
 ## Livrable 2
 
-### Atteinte des objectifs
+
  - ✔ UML 
  - ✔️ Classe Player
  - ✔️ Classes des Cartes
  - Dans le main : 
   - ✔️  Créer 4 joueurs, un pour chaque rôle, et les placer sur une ville ;
   - ✔️  Tirer 2 cartes de la pile des cartes infection et effectuer les actions associées (donc être capable de dérouler une phase d'infection, au moins manuellement) ;
-  - ⏳ Pour chaque joueur : tirer 2 cartes de la pile des cartes joueur et les ajouter à la main du joueur. Si une carte épidémie est tirée, il faut résoudre son utilisation correctement.
+  - ✔️ Pour chaque joueur : tirer 2 cartes de la pile des cartes joueur et les ajouter à la main du joueur. Si une carte épidémie est tirée, il faut résoudre son utilisation correctement.
 
 
 ## Livrable 3
 
-   - ⏳ crée un plateau de jeu à partir d’un fichier JSON passé en argument sur la ligne de commande :
-   - ⏳ création des villes, création des paquets de cartes, et de tout ce qui est nécessaire pour le jeu ;
-   - ⏳ crée 4 joueurs, chacun ayant un rôle différent, les place sur une ville (peu importe laquelle) ;
+   - ✔️ crée un plateau de jeu à partir d’un fichier JSON passé en argument sur la ligne de commande :
+   - ✔️ création des villes, création des paquets de cartes, et de tout ce qui est nécessaire pour le jeu ;
+   - ✔️ crée 4 joueurs, chacun ayant un rôle différent, les place sur une ville (peu importe laquelle) ;
    - ⏳ lance le jeu qui réalise toutes les phases (pour chaque joueur : jouer 4 actions, piocher 2 cartes, propager les maladies, se référer au sujet et à la règle du jeu).
 
 N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se terminer).
 
 
-## Livrable 4
+## Rendu Final 
+   
+    - ✔️ le fichier README.md (ou readme.md) avec les sections livrables et journal complétées
+    - ⏳ UML version finale
+    - ✔️ répertoire src, test et jar
+    - ⏳ un fichier Makefile supportant au moins ,make clean, make doc (pour produire la javadoc), make jeu.jar (voir ci-dessous), make cls (pour produire les fichier .class)
+    - mise en fore ( documentation à 100%, structure propore des dossiers, pas de fichers logiciels...etc)
+    - ficher jar executable avec argument JSON
+
 
 
 
@@ -140,5 +148,6 @@ N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se
 - Nous avons demandé au professeur d'évualuer notre travail jusq'au livrabel 2. Une fois l'évaluation faite, Nous allons attacker les attendues pour le livrable 3.
 
 ## Semaine 11
+-  en train de de travailer sur la version finale de jeu
 
 ## Semaine 12
