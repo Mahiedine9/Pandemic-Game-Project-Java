@@ -19,12 +19,16 @@ public class PandemicGame {
 	private ArrayList<Player> players ;
 	private Iterator<Player> currentlyPlaying ;
 	private HashMap<Disease, Integer> diseaseCubes ;
+	private Integer index;
+	private ArrayList<City> citiesAlreadyInfectedDuringCurrentInfectionPhase ;
 	
 	public PandemicGame (World world, ArrayList<Player> players ) {
 		this.world = world ;
 		this.players = players;
 		this.currentlyPlaying = players.iterator() ;
 		this.diseaseCubes = new HashMap<Disease, Integer>() ;
+		this.citiesAlreadyInfectedDuringCurrentInfectionPhase =  new ArrayList<City>() ;
+		
 	}
 	
 	public World getWorld() {
@@ -44,26 +48,64 @@ public class PandemicGame {
 	}
 	
 	
-	private  Boolean isGameOver() {
-		
-		// TODO 
-		// Ici on réponds à la question si le jeu est terminée ?
-		// nous allons vérifier si le jeu est terminée et puis c'est si le cas , la partie est-elle ganée ou perdue ??
-		return false ;
-	}
-	
 	public void run () {
+		
+
+		
+		this.launchInfectionPhase();
+
+		System.out.println("les cubes présents sur les villes voisines") ;
+		for(City neighbor : this.world.getCities()) System.out.println(neighbor.getName()+":"+ neighbor.getDiseases()) ;
+		
+		
+		
+		
+	
+		
+		
 		// TODO
 		// ici on doit lancer la partie et et donner le tour au joueur jusq'au ou la partie est terminée
 		// cette méthode est la méthode principle de jeu ( à cote de initiate())
 		// cette méthode va utiliser l'ensemble des méthodes privée définies au dessous
 	}
 	
+	private  Boolean isGameOver() {
+		
+		//4 remèdes sont trouvées
+		Boolean scenario1 = true ; ;
+		for ( Disease remedy : Disease.values()) {
+			if (! this.world.getRemedies().contains(remedy)) scenario1 = false  ;
+		}
+		
+		//le nombre de foyers d’infection atteint 8,
+		Boolean scenario2 = this.world.getNbOutBreaks() >= 8 ;
+		
+		// un joueur ne peut pas prendre les 2 cartes joueur à son tour
+		Boolean scenario3 = this.world.getPlayerDeck().isEmpty();
+		
+		// il n’y a plus de cube disponible pour une maladie alors qu’il faut en placer un sur une ville,
+				// on gère ce cas dans la méthode qui concerne l'ajout des cubes  this.addDiseaseCube()
+		
+		return scenario1 || scenario2 || scenario3 ;
+	}
+	
+	private Boolean isGameWon() {
+		//4 remèdes sont trouvées
+		Boolean won = true ; ;
+		for ( Disease remedy : Disease.values()) {
+			if (! this.world.getRemedies().contains(remedy)) won = false  ;
+		}
+		
+		return won ;
+	}
+
+	
 	public void initiate() {
 		// ajout des cubes maladies
 		for (Disease disease : this.world.getDiseases()) {
 			this.diseaseCubes.put(disease, 24) ;
 		}
+		
 		
 		// creation des cartes et leur ajouts dans les deux piles du plateau
 		ArrayList<InfectionCard> cartesinfection = new ArrayList<InfectionCard>() ;
@@ -142,7 +184,10 @@ public class PandemicGame {
 		
 		// placement des joueerus dans une ville choisi au hasard et construction d'une station d recherche
 		
-		City itBegins = this.world.getCities().get(0) ; // cette selectioon reste aléatoire : voir méthode World.getCities()
+		ArrayList<City> cityRandomizer = this.world.getCities();
+		Collections.shuffle(cityRandomizer) ;
+		
+		City itBegins = cityRandomizer.get(0) ; // cette selectioon est aléatoire
 		
 		for (Player joueur : this.players) {
 			joueur.initPosition(itBegins) ;
@@ -152,9 +197,12 @@ public class PandemicGame {
 		this.world.countUsedResearchStation();
 		
 		System.out.print("Jeu initalisé avec succeès !") ;
+		
 		}
 
 	private void launchInitialInfection() {
+		
+		// ici on doit remplace addDisease par addDiseaseCube !!!
 		for ( int i = 0; i < 3 ; i++) {
 			InfectionCard carte = this.world.drawInfectionDeck() ;
 			carte.getCity().addDisease(carte.getDisease());
@@ -172,54 +220,40 @@ public class PandemicGame {
 			this.world.DiscardInfectionCard(carte);}
 		}
 	
-	private void playturn(Player player) throws NotANeighbourCityException, NoMoreResearchStationAvailableException, PlayerDoesNotHaveProperCardException, NotAResearchStationException, NotEnoughCardsToFindARemedyException {
-		// le joueuer fait ses actions (ou pas)
-		while (player.hasActionsRemaning())  this.performAction(player)  ;
-		
-		// le joueur tire deux carte joueur et les ajoute à sa main ( à moins si ces dernière étaient EpidimicCard ou il possède déja 7 cartes) 
-		PlayableCard carte1 = this.world.drawPlayerDeck() ;
-		PlayableCard carte2 = this.world.drawPlayerDeck() ;
-		PlayableCard[] cartes = {carte1,carte2} ;
-		for (PlayableCard carte : cartes) {
-		  if (carte.getClass().equals(EpidemicCard.class)) this.handlEpidemicCard() ;
-		  else player.getHand().add((PlayerCard) carte) ;}
-		
-		// un joueur un peut pas avoir plus de 7 cartes à moment un donnée
-		if (player.getHand().size() > 7 ) this.forceSevenCards(player) ;
-		
-		//enfin on lance la phase d'infection
-		this.launchInfectionPhase() ;
-		}
+	
 	
 	
 	
 	
 	private void forceSevenCards(Player player) {
 		
-		while (player.getHand().size() > 7 ) {
-		Integer handSize = player.getHand().size();
-
-		String message = """
-			    Joueur %s n'possède actuellement plus que 7 cartes joueurs dans sa main. Veuillez sélectionner une carte à supprimer. Choisissez un numéro de 0 à %d:
-			    """.formatted(player.getName(), handSize - 1);
-	    System.out.println(message) ;
-	    for (PlayerCard carte : player.getHand()) {
-	    	System.out.println("carte joueur => numéro :"+player.getHand().indexOf(carte)+" ville :"+carte.getCity().getName()+" maladie :"+carte.getDisease().name()) ;
-	    }
-	    
-	    try (Scanner scanner = new Scanner(System.in)) {
-			Integer index = scanner.nextInt();  
-			
-			player.getHand().remove(index) ;
-		}
-	    
-	    catch (Exception e ) {}
-	    
-		}
-			
+		while (player.getHand().size() > 0 ) {
+			ArrayList<PlayerCard> hand = player.getHand() ;
+			HashMap <String,PlayerCard> handCards = new HashMap<String,PlayerCard>() ;
+		for (PlayerCard carte : hand ) handCards.put((carte.getCity().getName()+"-"+carte.getDisease().name()).toLowerCase(),carte) ;
+		System.out.println();
+		System.out.println(handCards.keySet()) ;
+		System.out.println("Enter the name of the card you want to delete:");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine().toLowerCase();
+        
+        if (handCards.containsKey(input)) {
+            PlayerCard cardToDelete = handCards.get(input);
+            player.getHand().remove(cardToDelete);
+            System.out.println("Card deleted successfully.");
+        } else {
+            System.out.println("Invalid card name. Please try again.");
+        }
+        
+    }
+		
+		
+		
 	}
 
 	private void launchInfectionPhase() {
+		this.clearInfectedCitiesForNextPhase();
+		
 		Integer currentInfectionRate = this.world.getInfectionRate() ;
 		ArrayList<InfectionCard> cartes = new ArrayList<InfectionCard>() ;
 		
@@ -228,20 +262,52 @@ public class PandemicGame {
 		}
 		
 		for (InfectionCard carte : cartes ) {
-			carte.getCity().addDisease(carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
+			this.world.DiscardInfectionCard(carte);
 			
-		// il manque des choses ici
 		}
+		
+		this.clearInfectedCitiesForNextPhase();
 		
 	}
      
 	
-	private static void addDiseaseCube(City city, Disease disease) {
-		// TODO
-		// cette méthode , statique et recursive, va gérer l'ajout d'un cube de maladie à une ville donne
-		// elle doit donc gérer le cas ou la ville est un foyer d'infection, en appeleant elle meme avec le meme paramère sur l'ensemble des villes voisines
+	private  void addDiseaseCube(City city, Disease disease) {
 		
+		if (this.diseaseCubes.get(disease) <= 0)  {}  // gérer fin de jeu
+		
+		else if (!this.citiesAlreadyInfectedDuringCurrentInfectionPhase.contains(city)) {
+			
+			if (city.isOutBreakOfInfection(disease)) {
+				this.handleAddDiseaseCubeWhenOutBreak(city,disease) ;
+			}
+			
+			 else {
+				 city.addDisease(disease);
+				 this.diseaseCubes.put(disease, (this.diseaseCubes.get(disease))-1) ;
+			 }
+		}
 	}
+	
+	
+	private void handleAddDiseaseCubeWhenOutBreak(City city, Disease disease) {
+		for (City neighbourCity : this.world.getCityNeighbours(city)) {
+			this.addDiseaseCube(neighbourCity, disease);
+		}	
+	} 
+	
+	private void clearInfectedCitiesForNextPhase() {
+		this.citiesAlreadyInfectedDuringCurrentInfectionPhase.clear();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private void handlEpidemicCard() {
 		// TODO Auto-generated method stub
 		
@@ -363,5 +429,22 @@ public class PandemicGame {
 	    }
 	}
 
-
+	private void playturn(Player player) throws NotANeighbourCityException, NoMoreResearchStationAvailableException, PlayerDoesNotHaveProperCardException, NotAResearchStationException, NotEnoughCardsToFindARemedyException {
+		// le joueuer fait ses actions (ou pas)
+		while (player.hasActionsRemaning())  this.performAction(player)  ;
+		
+		// le joueur tire deux carte joueur et les ajoute à sa main ( à moins si ces dernière étaient EpidimicCard ou il possède déja 7 cartes) 
+		PlayableCard carte1 = this.world.drawPlayerDeck() ;
+		PlayableCard carte2 = this.world.drawPlayerDeck() ;
+		PlayableCard[] cartes = {carte1,carte2} ;
+		for (PlayableCard carte : cartes) {
+		  if (carte.getClass().equals(EpidemicCard.class)) this.handlEpidemicCard() ;
+		  else player.getHand().add((PlayerCard) carte) ;}
+		
+		// un joueur un peut pas avoir plus de 7 cartes à moment un donnée
+		if (player.getHand().size() > 7 ) this.forceSevenCards(player) ;
+		
+		//enfin on lance la phase d'infection
+		this.launchInfectionPhase() ;
+		}
 }
