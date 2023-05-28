@@ -127,8 +127,14 @@ public abstract class Player {
 		this.nbActionsRemaining -- ;}
 	
 	
+	public void initPosition(City city) {
+		this.currentCity = city ;
+	}
 	
 	
+	public Boolean hasActionsRemaning() {
+		return (this.nbActionsRemaining > 0) ;
+	}
 	
 	
 	

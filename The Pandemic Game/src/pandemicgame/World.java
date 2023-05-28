@@ -26,9 +26,9 @@ public class World {
 	private Integer outBreaks = 0;
 	private Integer researchStationsAvailable = 6 ;
 	private Stack<InfectionCard> infectionDeck =  new Stack<InfectionCard>() ;
-	private Stack<InfectionCard> infectionDiscardPile = new Stack<InfectionCard>();
+	public Stack<InfectionCard> infectionDiscardPile = new Stack<InfectionCard>();
 	private Stack<PlayableCard> playerDeck = new Stack<PlayableCard>() ;
-	private Stack<PlayableCard> playerDiscardPile = new Stack<PlayableCard>();
+	public Stack<PlayableCard> playerDiscardPile = new Stack<PlayableCard>();
 	
 	
  /**
@@ -145,6 +145,14 @@ public class World {
 	public Stack<InfectionCard> getInfectionDeck() {
 		return this.infectionDeck ;
 	}
+	
+	public Stack<InfectionCard> getInfectionDiscardPile() {
+		return this.infectionDiscardPile ;
+	}
+	
+	public  Stack<PlayableCard> getplayerDiscardPile() {
+		return this.playerDiscardPile ;
+	}
 	public PlayableCard drawPlayerDeck () {
 		 return   this.playerDeck.pop();
 	}
@@ -189,6 +197,14 @@ public class World {
 	public void addRemedy(Disease disease) {
 		if ( ! this.remedies.contains((disease)))
 		    this.remedies.add(disease) ;
+	}
+	public ArrayList<City> getResearchStationCities() {
+		ArrayList<City> researchStationCities = new ArrayList<City>() ;
+		for  (City city : this.getCities()) {
+			if (city.isResearchStation()) researchStationCities.add(city) ;
+		}
+		
+		return researchStationCities;
 	}
 	
 	

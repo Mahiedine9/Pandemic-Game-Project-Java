@@ -13,9 +13,9 @@ public class PandemicGameMain {
 		World myWorld = new World("The Pandemic Game/files/carte2.json") ;
 		ArrayList<Player> players = new ArrayList<Player>() ;
 		City ville = myWorld.getCities().get(0) ;
+		Globetrotter karim = new Globetrotter("karim", ville, myWorld) ;
         Doctor timo = new Doctor("timo", ville, myWorld) ;
         Expert leon = new Expert("leon", ville, myWorld) ;
-        Globetrotter karim = new Globetrotter("karim", ville, myWorld) ;
         Scientific lucas = new Scientific("lucas", ville, myWorld) ;
         players.add(timo) ;
         players.add(leon) ;
@@ -24,9 +24,12 @@ public class PandemicGameMain {
 		PandemicGame game = new PandemicGame(myWorld, players) ;
 		
 
+	  
+	    
 		
+	    
 		game.initiate() ;
-	   	game.run() ;
+	    game.run() ;
 
 }
 		

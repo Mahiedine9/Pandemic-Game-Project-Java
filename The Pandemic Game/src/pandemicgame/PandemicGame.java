@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Random;
@@ -50,23 +51,31 @@ public class PandemicGame {
 	
 	public void run () {
 		
-
+		System.out.println();
+		//this.world.addRemedy(Disease.DISEASE1);
+		Player p = this.players.get(0) ;
+		System.out.println(p.getClass()) ;
 		
-		this.launchInfectionPhase();
-
-		System.out.println("les cubes présents sur les villes voisines") ;
-		for(City neighbor : this.world.getCities()) System.out.println(neighbor.getName()+":"+ neighbor.getDiseases()) ;
+		City playerCity = p.getCity() ;
+		this.addDiseaseCube(playerCity, Disease.DISEASE1);
+		this.addDiseaseCube(playerCity, Disease.DISEASE1);
+		this.addDiseaseCube(playerCity, Disease.DISEASE1);
 		
-		
+		System.out.println(this.diseaseCubes);
+		System.out.println(playerCity.getDiseases()) ;
+		this.performAction(p);
+		System.out.println(this.diseaseCubes);
+		System.out.println(playerCity.getDiseases()) ;
 		
 		
 	
 		
 		
-		// TODO
-		// ici on doit lancer la partie et et donner le tour au joueur jusq'au ou la partie est terminée
-		// cette méthode est la méthode principle de jeu ( à cote de initiate())
-		// cette méthode va utiliser l'ensemble des méthodes privée définies au dessous
+		
+		
+		
+		
+		
 	}
 	
 	private  Boolean isGameOver() {
@@ -202,21 +211,22 @@ public class PandemicGame {
 
 	private void launchInitialInfection() {
 		
-		// ici on doit remplace addDisease par addDiseaseCube !!!
 		for ( int i = 0; i < 3 ; i++) {
 			InfectionCard carte = this.world.drawInfectionDeck() ;
-			carte.getCity().addDisease(carte.getDisease());
-			carte.getCity().addDisease(carte.getDisease());
-			carte.getCity().addDisease(carte.getDisease());
+			//carte.getCity().addDisease(carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
 			this.world.DiscardInfectionCard(carte);}
 		for ( int i = 0; i < 3 ; i++) {
 			InfectionCard carte = this.world.drawInfectionDeck() ;
-			carte.getCity().addDisease(carte.getDisease());
-			carte.getCity().addDisease(carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
 			this.world.DiscardInfectionCard(carte);}
 		for ( int i = 0; i < 3 ; i++) {
 			InfectionCard carte = this.world.drawInfectionDeck() ;
-			carte.getCity().addDisease(carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
+			this.addDiseaseCube(carte.getCity(), carte.getDisease());
 			this.world.DiscardInfectionCard(carte);}
 		}
 	
@@ -251,27 +261,24 @@ public class PandemicGame {
 		
 	}
 
-	private void launchInfectionPhase() {
+	private void launchInfectionPhase(Boolean epidemicCard) {
 		this.clearInfectedCitiesForNextPhase();
 		
+		
 		Integer currentInfectionRate = this.world.getInfectionRate() ;
+		if (epidemicCard)  currentInfectionRate = 1 ;
+		
 		ArrayList<InfectionCard> cartes = new ArrayList<InfectionCard>() ;
 		
 		for (int i = 0 ; i < currentInfectionRate ; i++) {
 			cartes.add(this.world.drawInfectionDeck()) ;
 		}
-		
 		for (InfectionCard carte : cartes ) {
 			this.addDiseaseCube(carte.getCity(), carte.getDisease());
 			this.world.DiscardInfectionCard(carte);
-			
-		}
-		
-		this.clearInfectedCitiesForNextPhase();
-		
+		}		
 	}
      
-	
 	private  void addDiseaseCube(City city, Disease disease) {
 		
 		if (this.diseaseCubes.get(disease) <= 0)  {}  // gérer fin de jeu
@@ -283,12 +290,21 @@ public class PandemicGame {
 			}
 			
 			 else {
-				 city.addDisease(disease);
+				 
+				 city.getDiseases().add(disease) ;
 				 this.diseaseCubes.put(disease, (this.diseaseCubes.get(disease))-1) ;
+				 if (city.checkIfIsOutBreakOnNextAdd(disease)) {
+					 city.declareOutBReakOfInfection(disease);
+				 };
 			 }
 		}
 	}
-	
+
+	private void removeDiseaseCube(Disease disease, int cubeCount) {
+	    int currentCount = diseaseCubes.getOrDefault(disease, 0);
+	    int updatedCount = currentCount + cubeCount;
+	    diseaseCubes.put(disease, updatedCount);
+	}
 	
 	private void handleAddDiseaseCubeWhenOutBreak(City city, Disease disease) {
 		for (City neighbourCity : this.world.getCityNeighbours(city)) {
@@ -302,88 +318,259 @@ public class PandemicGame {
 	
 	
 	
+	private void handlEpidemicCard(EpidemicCard epidemicCard) {
+		// augmente le taux global d’infection 
+		this.world.upInfectionRate();
+		
+		// déclenche une phase d’infection avec une seule carte
+		this.launchInfectionPhase(true);
+		
+		//les cartes de la défausse des cartes infection sont mélangées puis remises sur le dessus de la pile des cartes infection
+		Collections.shuffle(this.world.getInfectionDiscardPile());
+		while (!this.world.getInfectionDiscardPile().isEmpty()) {
+			this.world.addInfectionCard(this.world.getInfectionDiscardPile().pop()) ; }
+		
+		// la carte épidémie est défaussée
+		this.world.getplayerDiscardPile().add(epidemicCard) ;
+	}
+
 	
+	private void playturn(Player player)  {
+		
+		// un joueur doit réaliser quatre actions parmi celles possibles
+		while (player.hasActionsRemaning()) {
+			this.performAction(player) ;
+		}
+		 
+		//il tire 2 cartes joueur de la pile des cartes joueur qu’il ajoute à sa main
+		player.getHand().add((PlayerCard) this.world.drawPlayerDeck()) ;
+		player.getHand().add((PlayerCard) this.world.drawPlayerDeck()) ;
+		
+		if (player.getHand().size() > 7) this.forceSevenCards(player);
+		
+		// une phase d’infection est lancée
+		this.launchInfectionPhase(false);
+}
 	
+	private void performAction(Player player) {
+	    System.out.println("Available actions:");
+	    System.out.println("1. Move");
+	    System.out.println("2. Build research station");
+	    System.out.println("3. Find remedy");
+	    System.out.println("4. Treat disease");
+	    System.out.println("5. Do nothing");
+	    
+	    int choice = getUserChoice(1, 5); // Get user input for the action choice
+	    
+	    switch (choice) {
+	        case 1:
+	        	
+	             this.performMoveAction(player);
+	             
+	            break;
+	        case 2:
+	        	
+	            this.perfromBuildAction(player);
+	            
+	            break;
+	        case 3:
+	        	
+	            this.perfromFindAction(player);
+	            
+	            break;
+	        case 4:
+	            
+	        	this.perfromTreatAction(player);
+	        	
+	            break;
+	        case 5:
+	            // Do nothing
+	            System.out.println("You chose to do nothing.");
+	            break;
+	        default:
+	            System.out.println("Invalid choice. Please try again.");
+	            break;
+	    }
+	}
+
+	private void perfromTreatAction(Player player) {
+		System.out.println("Choose a disease to treat:");
+	    ArrayList<Disease> diseases = player.getCity().getDiseases();
+
+	    // Display the available diseases in the current city
+	    for (int i = 0; i < diseases.size(); i++) {
+	        System.out.println((i + 1) + ". " + diseases.get(i).name());
+	    }
+
+	    int diseaseChoice = getUserChoice(1, diseases.size()); // Get user input for the disease choice
+
+	    Disease selectedDisease = diseases.get(diseaseChoice - 1);
+	    
+	    Integer nbCubesBeforeRemoval = player.getCity().howManyCubes(selectedDisease) ;
+	    player.treatDisease(selectedDisease);
+	    Integer nbCubesAfterRemoval = player.getCity().howManyCubes(selectedDisease) ;
+	    
+	    Integer treatedCubesCount = nbCubesBeforeRemoval-nbCubesAfterRemoval ;
+	    System.out.println("Disease " + selectedDisease.name() + " has been treated."+ treatedCubesCount + " cube(s) removed.");
+	    
+	    
+	    if (player.getClass().equals(Doctor.class) || this.world.getRemedies().contains(selectedDisease)) {
+	    	
+	    	
+	       this.removeDiseaseCube(selectedDisease,treatedCubesCount) ;
+	    }
+	    else 
+	    	 this.removeDiseaseCube(selectedDisease,1) ;
+	    
+	}
+
 	
-	
-	
-	
-	private void handlEpidemicCard() {
-		// TODO Auto-generated method stub
+
+	private void perfromFindAction(Player player) {
+		System.out.println("Choose a disease to find a remedy for:");
+	    ArrayList<Disease> diseases =  new ArrayList<Disease>(Arrays.asList(Disease.values()));
+
+	    // Display the available diseases
+	    for (int i = 0; i < diseases.size(); i++) {
+	        System.out.println((i + 1) + ". " + diseases.get(i).name());
+	    }
+
+	    int diseaseChoice = getUserChoice(1, diseases.size()); // Get user input for the disease choice
+	    Disease selectedDisease = diseases.get(diseaseChoice - 1);
+	    
+	    try {
+	  
+	        player.discoverRemedy(selectedDisease);
+	        System.out.println("A remedy has been discovered for " + selectedDisease.name() + ".");
+	    } catch (NotAResearchStationException e) {
+	        System.out.println("Invalid action: " + player.getCity().getName() + " is not a research station.");
+	    } catch (NotEnoughCardsToFindARemedyException e) {
+	        System.out.println("Not enough cards to find a remedy for " + selectedDisease.name() + ".");
+	    }
 		
 	}
 
-	private void performAction(Player player) throws NotANeighbourCityException, NoMoreResearchStationAvailableException, PlayerDoesNotHaveProperCardException, NotAResearchStationException, NotEnoughCardsToFindARemedyException {
-		Scanner scanner = new Scanner(System.in) ;
-		Integer action ;
-		
-		String message = """
-			    Joueur %s doit choiser une action. Choisissez un numéro de 0 à 4:
-			    """.formatted(player.getName());
-	    System.out.println(message) ;
-	    System.out.println("0 : se déplacer, 1 : construire une station de recherche, 2 :trouver un remède, 3:traiter une maladie, 4 :ne rien faire   ") ;
-	    action = scanner.nextInt(); 
-	    
-		
-			
-		if (action == 0 ) {
-			
-			ArrayList<City> neighbours = this.world.getCityNeighbours(player.getCity()) ;
-			ArrayList<String> neighboursNames = new ArrayList<String>() ;
- 			for (City neigbour : neighbours) { neighboursNames.add(neigbour.getName()) ;
- 			
- 			System.out.println(neighboursNames) ;
- 			String message_move = """
- 					Selectionner une ville voisine.  Choisissez un numéro de 0 à %d  :
- 					""".formatted(neighboursNames.size()-1) ;
- 			System.out.println(message_move) ;
- 			action = scanner.nextInt(); 
- 			City nouvelleCity = neighbours.get(action) ;
-			player.move(nouvelleCity) ;
-			
-		}}
- 			
- 		if (action == 1 ) {
- 			String message_build = """
- 					Voulez-vous construire une nouvelle station ou bien  déplacer une d'une autre ville ? .Choisissez un numéro de 1 à 2 :
- 					""" ;
- 			System.out.println(" 1 : construire une nouvelle station, 2 : déplacer une station existante d'une autre ville") ;
- 			
- 			// il manque des choses ici
- 		}
- 		
- 		if (action == 2 ) {
- 			String message_find = """
- 					Selectionner la maladie pour laquelle vous voulez trouver un remède.Choisissez un numéro de 1 à 4 :
- 					""" ;
- 			System.out.println(message_find) ;
- 			System.out.println(Arrays.asList(Disease.values())) ;
- 			action = scanner.nextInt(); 
- 			if (action == 1) player.discoverRemedy(Disease.DISEASE1) ;
- 			if (action == 2) player.discoverRemedy(Disease.DISEASE2) ;
- 			if (action == 3) player.discoverRemedy(Disease.DISEASE3) ;
- 			if (action == 4) player.discoverRemedy(Disease.DISEASE4) ;	 		  
- 		}
- 		
- 		if (action == 3) { 
- 			String message_treat = """
- 					Selectionner la maladie dont vous voulez traiter ( supprimer un cube) .Choisissez un numéro de 1 à 4 :
- 					""" ;
- 			System.out.println(message_treat) ;
- 			System.out.println(Arrays.asList(Disease.values())) ;
- 			action = scanner.nextInt(); 
- 			if (action == 1) player.treatDisease(Disease.DISEASE1) ;
- 			if (action == 2) player.treatDisease(Disease.DISEASE2) ;
- 			if (action == 3) player.treatDisease(Disease.DISEASE3) ;
- 			if (action == 4) player.treatDisease(Disease.DISEASE4) ;	
- 		}
- 		
- 		
-			
-			
-	}
-	    
+	private void perfromBuildAction(Player player) {
+		System.out.println("Choose an action:");
+	    System.out.println("1. Build a new research station");
+	    if (this.world.getResearchStationsAvailable() <= 0) {
+	        System.out.println("2. Move an existing research station");
+	    }
 
+	    int choice = getUserChoice(1, (this.world.getResearchStationsAvailable() <= 0) ? 2 : 1); // Get user input for the build action choice
+
+	    switch (choice) {
+	        case 1:
+	            try {
+	                player.buildResearchStation();
+	                System.out.println("A new research station has been built in " + player.getCity().getName() + ".");
+	            } catch (NoMoreResearchStationAvailableException e) {
+	                System.out.println("No more research stations available.");
+	            } catch (PlayerDoesNotHaveProperCardException e) {
+	                System.out.println("You don't have the proper card to build a research station in " + player.getCity().getName() + ".");
+	            }
+	            break;
+	        case 2:
+	            if (this.world.getResearchStationsAvailable() > 0) {
+	                System.out.println("Invalid choice. Please try again.");
+	                break;
+	            }
+	            
+	            System.out.println("Choose a city to move the research station from:");
+	            ArrayList<City> researchStationCities = this.world.getResearchStationCities();
+
+	            // Display the cities with research stations
+	            for (int i = 0; i < researchStationCities.size(); i++) {
+	                System.out.println((i + 1) + ". " + researchStationCities.get(i).getName());
+	            }
+
+	            int cityChoice = getUserChoice(1, researchStationCities.size()); // Get user input for the city choice
+
+	            try {
+	                City selectedCity = researchStationCities.get(cityChoice - 1);
+	                player.moveResearchStation(selectedCity);
+	                System.out.println("The research station has been moved from " + selectedCity.getName() + " to " + player.getCity().getName() + ".");
+	            } catch (NotAResearchStationException e) {
+	                System.out.println("Invalid move: " + player.getCity().getName() + " is not a research station.");
+	            } catch (PlayerDoesNotHaveProperCardException e) {
+	                System.out.println("You don't have the proper card to move the research station from " + player.getCity().getName() + ".");
+	            }
+	            break;
+	        default:
+	            System.out.println("Invalid choice. Please try again.");
+	            break;
+	    }
+	}
+
+	private void performMoveAction(Player player) {
+		System.out.println("Available cities to move:");
+	    ArrayList<City> neighborCities = this.world.getCityNeighbours(player.getCity());
+
+	    // Display the neighbor cities
+	    for (int i = 0; i < neighborCities.size(); i++) {
+	        System.out.println((i + 1) + ". " + neighborCities.get(i).getName());
+	    }
+
+	    int choice = getUserChoice(1, neighborCities.size()); // Get user input for the city choice
+
+	    try {
+	        // Move the player to the selected city by calling the existing move method in the Player class
+	        player.move(neighborCities.get(choice - 1));
+	        System.out.println("Moved to " + player.getCity().getName() + " successfully!");
+	    } catch (NotANeighbourCityException e) {
+	        System.out.println("Invalid move: Not a neighbor city!");
+	    }
+
+	  
+		
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private int getUserChoice(int minChoice, int maxChoice) {
+	    int choice;
+	    while (true) {
+	        try {
+	            Scanner scanner = new Scanner(System.in);
+	            System.out.print("Enter your choice: ");
+	            choice = scanner.nextInt();
+	            if (choice >= minChoice && choice <= maxChoice) {
+	                break;
+	            } else {
+	                System.out.println("Invalid choice. Please try again.");
+	            }
+	        } catch (InputMismatchException e) {
+	            System.out.println("Invalid choice. Please try again.");
+	        }
+	    }
+	    return choice;
+	}
+	
+	
+	
 	private static ArrayList<Integer> getQuartilePositions(int size) {
         ArrayList<Integer> quartilePositions = new ArrayList<>();
         
@@ -398,53 +585,11 @@ public class PandemicGame {
 	
 	
 	
-	// méthode qui crée un joueur d'une facon interactive, à utilsier dans  PandemicGameMain ???
-	public static  Player createPlayer(String name, String role, World world, ArrayList<Player> players) {
-	    ArrayList<City> cities = world.getCities();
-	    Random random = new Random();
 
-	    // Choisir une ville au hasard parmi les villes disponibles
-	    City city = cities.get(random.nextInt(cities.size()));
-		Player player;
-	    // Cr�er le joueur avec le r�le, le nom et la ville s�lectionn�s
-	    switch (role.toUpperCase()) {
-	        case "DOCTOR":
-	             player = new Doctor(name, city, world);
-				 players.add(player);
-				 return player;
-	        case "EXPERT":
-	            player = new Expert(name, city, world);
-				players.add(player);
-				return player;
-	        case "SCIENTIFIC":
-	            player = new Scientific(name, city, world);
-				players.add(player);
-				return player;
-	        case "GLOBETROTTER":
-	            player = new Globetrotter(name, city, world);
-				players.add(player);
-				return player;
-	        default:
-	            throw new IllegalArgumentException("Role not recognized");
-	    }
-	}
 
-	private void playturn(Player player) throws NotANeighbourCityException, NoMoreResearchStationAvailableException, PlayerDoesNotHaveProperCardException, NotAResearchStationException, NotEnoughCardsToFindARemedyException {
-		// le joueuer fait ses actions (ou pas)
-		while (player.hasActionsRemaning())  this.performAction(player)  ;
-		
-		// le joueur tire deux carte joueur et les ajoute à sa main ( à moins si ces dernière étaient EpidimicCard ou il possède déja 7 cartes) 
-		PlayableCard carte1 = this.world.drawPlayerDeck() ;
-		PlayableCard carte2 = this.world.drawPlayerDeck() ;
-		PlayableCard[] cartes = {carte1,carte2} ;
-		for (PlayableCard carte : cartes) {
-		  if (carte.getClass().equals(EpidemicCard.class)) this.handlEpidemicCard() ;
-		  else player.getHand().add((PlayerCard) carte) ;}
-		
-		// un joueur un peut pas avoir plus de 7 cartes à moment un donnée
-		if (player.getHand().size() > 7 ) this.forceSevenCards(player) ;
-		
-		//enfin on lance la phase d'infection
-		this.launchInfectionPhase() ;
-		}
+
+	
+	
+	
+	
 }
