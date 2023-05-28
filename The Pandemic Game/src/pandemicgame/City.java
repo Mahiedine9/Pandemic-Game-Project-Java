@@ -64,6 +64,15 @@ public class City {
 	 */
 	public void declareOutBReakOfInfection(Disease disease) {this.OutBreakInfectionPerDisease.put(disease, true) ;}
 	
+	
+	public Boolean checkIfIsOutBreakOnNextAdd(Disease disease) {
+		
+		Integer cubes = 0 ;
+		for (Disease d :this.diseases) {if (d.equals(disease)) cubes ++ ; }
+		
+		return cubes >= 3 ;
+	}
+	
 	/**
 	 * returns a list of diseases (cubes in the physical game) found within the city
 	 * @return the diseases
@@ -80,15 +89,34 @@ public class City {
 			if (presentDisease.equals(disease) ) howManyCubes ++ ;
 		}
 		if (howManyCubes < 3 && ! this.isOutBreakOfInfection(disease))  this.diseases.add(disease) ; 
-		else this.declareOutBReakOfInfection(disease) ;}
+		else this.declareOutBReakOfInfection(disease) ;
+		// add count to nbofOutBReaks in world
+		}
 	
-	/**
-	 * remove a disease from the city
-	 * @param the disease
-	 */
+	
+	
+	 
+	
 	public void removeDisease(Disease disease) throws IndexOutOfBoundsException {
 		if (this.getDiseases().isEmpty()) throw new IndexOutOfBoundsException() ;
 		this.getDiseases().remove(disease) ;}
+
+	public int howManyCubes(Disease selectedDisease) {
+	    int count = 0;
+     
+	    
+	    
+	    
+	    for (Disease disease : this.diseases) {
+	        if (disease.equals(selectedDisease)) {
+	            count++;
+	        }
+	    }
+
+	   
+	    return count;
+	}
+
 }
 	
 	/**
