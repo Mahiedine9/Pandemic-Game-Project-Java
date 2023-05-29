@@ -62,7 +62,7 @@ public class City {
 	 * declares city as an outBreak of a certain disease
 	 * @param the disease
 	 */
-	public void declareOutBReakOfInfection(Disease disease) {this.OutBreakInfectionPerDisease.put(disease, true) ;}
+	public void declareOutBReakOfInfection(Disease disease) {this.OutBreakInfectionPerDisease.put(disease, true) ; }
 	
 	
 	public Boolean checkIfIsOutBreakOnNextAdd(Disease disease) {

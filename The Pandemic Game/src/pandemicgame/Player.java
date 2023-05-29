@@ -135,6 +135,11 @@ public abstract class Player {
 	public Boolean hasActionsRemaning() {
 		return (this.nbActionsRemaining > 0) ;
 	}
+
+	public void doNothing() {
+		this.nbActionsRemaining -- ;
+		
+	}
 	
 	
 	

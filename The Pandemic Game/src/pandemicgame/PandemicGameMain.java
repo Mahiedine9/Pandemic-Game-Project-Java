@@ -28,7 +28,7 @@ public class PandemicGameMain {
 	    
 		
 	    
-		game.initiate() ;
+		
 	    game.run() ;
 
 }
