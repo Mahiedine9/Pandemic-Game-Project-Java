@@ -67,7 +67,7 @@ public class PandemicGame {
 
 	        int choice = getUserChoice(1, 2);
 
-	        if (choice == 1) {
+	        if (choice == 1 && ! this.gameIsOver) {
 	        	
 	            this.displayGameState();
 	        }
@@ -786,8 +786,14 @@ public class PandemicGame {
 	
 	private void performMoveAction(Player player) {
 	    System.out.println("Available cities to move:");
+	    City currentCity = player.getCity();
+
 	    ArrayList<City> neighborCities = this.world.getCityNeighbours(player.getCity());
-	    
+
+	    if (neighborCities == null) {
+	        System.out.println("Invalid move: Sorry you can not move more than one time in a turn.");
+	        return; // Exit the method to prevent further execution
+	    }
 
 	    // Display the neighbor cities
 	    for (int i = 0; i < neighborCities.size(); i++) {
@@ -803,7 +809,7 @@ public class PandemicGame {
 	    } catch (NotANeighbourCityException e) {
 	        System.out.println("Invalid move: The selected city is not a neighbor!");
 	    }
-	    
+
 	    displayWithDelay("", 1000);
 	}
 	
