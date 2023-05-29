@@ -12,81 +12,12 @@
 
 [Le sujet 2023](https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/sujet2023.pdf)
 
-#Instruction 
+##Instructions sur comment lancer le jeu
 
-Un lancement réussi de ce jeu se fait en suivant les étapes suivantes :
-
-- Définissez la variable CLASSPATH sur votre machine.
-
-- Générer la documentation javadoc.
-
-- Compiler l'ensembles des classes Java.
-
-- Compiler et exécuter les tests Java.
-
-- Éxécuter les programmes.
-
-## Définition de la variable 'CLASSPATH' Java
-
-- sous linux :
-
-```bash
-  someone@somewhere:~$ export CLASSPATH="src:classes"
-```
-- sous windows :
-
-```bash
-  someone@somewhere:~$ $env:CLASSPATH="src;classes"
-
-```
-
-## Générer la documentation javadoc.
-
-- en vous mettant sur le dossier principale de projet:
-
-```bash
-  someone@somewhere:~$ cd l2s4-projet-2023
-  someone@somewhere/../l2s4-projet-2023:~$ 
-
-```
-- lancez la commande :
-
-```bash
-  someone@somewhere/../tp5:~$ javadoc -d docs -subpackages pandemicgam
-```
-- N.B : La documentation générée est ensuite consutlable via un navigteur sur tp5/docs.
-
-## Compiler l'ensembles des classes de Jeu
-
-- toujours depuis le dossier parent. afin de compiler l'intégralité des fichers sources:
-
-```bash
-someone@somewhere/../l2s4-projet-2023:~$ javac src/pandemicgame/*.java -d classes
-
-```
-N.B : il est nécessaire de compiler touts les fichiers de sources.
-
-
-## Compiler et exécuter les tests Java
-- on commence par compliler les tests :
-
-```bash
-insctuction sur comment compiler les tests Junit hors eclipse à venir
-```
-- puis éxécuter un des tests :
-```bash
-insctuction sur comment éxécuter les tests Junit hors eclipse à venir
-```
-
-
-## Éxécuter les programmes
-
-- toujours depuis le dossier parent, on éxécute un programme à la fois :
-
-```bash
-someone@somewhere/../l2s4-projet-2023:~$ java pandemicgame.PandemicGameMain
-
-```
+-   - Clonez le projet dans Eclipse en utilisant l'importation intelligente (vidéo expliquante sur le portail : https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/videos/3-eclipse-creation-git-avec-contenu.mp4).
+    - Accédez au package "pandemic game/src/PandemicGameMain".
+    - Faites un clic gauche, choisissez "Run" (Exécuter), puis "Run as Java Application" (Exécuter en tant qu'application Java). Votre jeu devrait alors se lancer dans la console sans problème.
+    - Le jeu se joue de manière interactive et vous pouvez choisir ce qui se passe en utilisant des entrées textuelles (des nombres).
 
 
 # Livrables
@@ -125,13 +56,11 @@ N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se
 
 ## Rendu Final 
    
+    - ✔️ Le jeu fonctionne et se termine normalemnt
     - ✔️ le fichier README.md (ou readme.md) avec les sections livrables et journal complétées
     - ✔️ UML version finale
     - ✔️ répertoire src, test et jar
-    - ⏳ un fichier Makefile supportant au moins ,make clean, make doc (pour produire la javadoc), make jeu.jar (voir ci-dessous), make cls (pour produire les fichier .class)
-    - mise en fore ( documentation à 100%, structure propore des dossiers, pas de fichers logiciels...etc)
-    - ficher jar executable avec argument JSON
-
+    
 
 
 
@@ -151,3 +80,4 @@ N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se
 -  en train de de travailer sur la version finale de jeu
 
 ## Semaine 12
+-  Projet fait. le jeu démarre et se termine normalment

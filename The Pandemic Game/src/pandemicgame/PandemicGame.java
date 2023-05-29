@@ -33,6 +33,7 @@ public class PandemicGame {
 		this.diseaseCubes = new HashMap<Disease, Integer>() ;
 		this.citiesAlreadyInfectedDuringCurrentInfectionPhase =  new ArrayList<City>() ;
 		this.gameIsOver = false ;
+		this.currentPlayerIndex = 0;
 		outBreakCities = new ArrayList<City>() ;
 		
 	}
