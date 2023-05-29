@@ -12,9 +12,9 @@
 
 [Le sujet 2023](https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/sujet2023.pdf)
 
-##Instructions sur comment lancer le jeu
-
--   - Clonez le projet dans Eclipse en utilisant l'importation intelligente (vidéo expliquante sur le portail : https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/videos/3-eclipse-creation-git-avec-contenu.mp4).
+## Comment lancer le jeu ?
+   
+    - Clonez le projet dans Eclipse en utilisant l'importation intelligente (vidéo expliquante sur le portail : https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/videos/3-eclipse-creation-git-avec-contenu.mp4).
     - Accédez au package "pandemic game/src/PandemicGameMain".
     - Faites un clic gauche, choisissez "Run" (Exécuter), puis "Run as Java Application" (Exécuter en tant qu'application Java). Votre jeu devrait alors se lancer dans la console sans problème.
     - Le jeu se joue de manière interactive et vous pouvez choisir ce qui se passe en utilisant des entrées textuelles (des nombres).
@@ -35,7 +35,7 @@
 ## Livrable 2
 
 
- - ✔ UML 
+ - ✔️ UML 
  - ✔️ Classe Player
  - ✔️ Classes des Cartes
  - Dans le main : 
@@ -52,15 +52,6 @@
    - ✔️ lance le jeu qui réalise toutes les phases (pour chaque joueur : jouer 4 actions, piocher 2 cartes, propager les maladies, se référer au sujet et à la règle du jeu).
 
 N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se terminer).
-
-
-## Rendu Final 
-   
-    - ✔️ Le jeu fonctionne et se termine normalemnt
-    - ✔️ le fichier README.md (ou readme.md) avec les sections livrables et journal complétées
-    - ✔️ UML version finale
-    - ✔️ répertoire src, test et jar
-    
 
 
 
@@ -80,4 +71,4 @@ N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se
 -  en train de de travailer sur la version finale de jeu
 
 ## Semaine 12
--  Projet fait. le jeu démarre et se termine normalment
+-  Projet fait. le jeu se lance et se termine normalment.
