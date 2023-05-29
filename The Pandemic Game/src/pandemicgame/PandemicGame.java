@@ -55,19 +55,26 @@ public class PandemicGame {
 	}
 	
 	
-	public void run () {
-		
-		this.initiate();
-	    
-		
-		this.displayGameState() ;
-		System.out.println(this.world.getDiseases()) ;
-		
-		
-		
-		
+	public void run() {
+	    this.initiate();
+
+	    while (!this.gameIsOver) {
+	        this.playTurn(this.whosTurnIsIt());
+	        
+
+	        // Prompt the user to choose an action
+	        System.out.println("1. View game state");
+	        System.out.println("2. Proceed to the next turn");
+
+	        int choice = getUserChoice(1, 2);
+
+	        if (choice == 1) {
+	            this.displayGameState();
+	        
+	        this.checkGameOver();
+	        }
+	    }
 	}
-	
 	private Player whosTurnIsIt() {
 		Player currentPlayer = this.players.get(this.currentPlayerIndex);
 	    // Update currentPlayerIndex to point to the next player
@@ -76,127 +83,129 @@ public class PandemicGame {
 	}
 
 	private void displayGameState() {
-	    System.out.println("Please choose which information you want to view:");
-	    System.out.println("1. List of players, their roles, and their current locations");
-	    System.out.println("2. Whose turn it is");
-	    System.out.println("3. List of cities and their neighbors");
-	    System.out.println("4. List of research stations built and the number of remaining stations");
-	    System.out.println("5. List of remedies/discoveries");
-	    System.out.println("6. Number of outbreaks that have occurred");
-	    System.out.println("7. Current infection rate");
-	    System.out.println("8. Cubes present in each city and their colors");
-	    System.out.println("9. Current disease cube distribution");
-	    System.out.println("10. Number of cards in each pile");
-	    System.out.println("11. Game over status");
+	    boolean exit = false;
 
-	    int choice = getUserChoice(1, 10);
+	    while (!exit) {
+	        System.out.println("Please choose which information you want to view:");
+	        System.out.println("1. List of players, their roles, and their current locations");
+	        System.out.println("2. Whose turn it is");
+	        System.out.println("3. List of cities and their neighbors");
+	        System.out.println("4. List of research stations built and the number of remaining stations");
+	        System.out.println("5. List of remedies/discoveries");
+	        System.out.println("6. Number of outbreaks that have occurred");
+	        System.out.println("7. Current infection rate");
+	        System.out.println("8. Cubes present in each city");
+	        System.out.println("9. Current disease cube distribution");
+	        System.out.println("10. Number of cards in each pile");
+	        System.out.println("11. Exit");
 
-	    switch (choice) {
-	        case 1:
-	        	// Display list of players, their roles, and their current locations
-	            System.out.println("List of players, their roles, and their current locations:");
-	            for (Player player : players) {
-	                System.out.println("Player: " + player.getName());
-	                System.out.println("Role: " + player.getClass().getSimpleName());
-	                System.out.println("Current Location: " + player.getCity().getName());
-	                System.out.println("-----------------------");
-	            }
-	            break;
-	        case 2:
-	        	// Display whose turn it is
-	            Player currentPlayer = whosTurnIsIt();
-	            System.out.println("Current turn: " + currentPlayer.getName());
-	            break;
-	        case 3:
-	        	// Display list of cities and their neighbors
-	            System.out.println("List of cities and their neighbors:");
-	            for (City city : world.getCities()) {
-	                ArrayList<City> neighbors = world.getCityNeighbours(city);
-	                ArrayList<String> neighborNames = new ArrayList<>();
-	                for (City neighbor : neighbors) {
-	                    neighborNames.add(neighbor.getName());
+	        int choice = getUserChoice(1, 11);
+
+	        switch (choice) {
+	            case 1:
+	                // Display list of players, their roles, and their current locations
+	                System.out.println("List of players, their roles, and their current locations:");
+	                for (Player player : players) {
+	                    System.out.println("Player: " + player.getName());
+	                    System.out.println("Role: " + player.getClass().getSimpleName());
+	                    System.out.println("Current Location: " + player.getCity().getName());
+	                    System.out.println("-----------------------");
 	                }
-	                System.out.println(city.getName() + " neighbors: " + neighborNames);
-	            }
-	            break;
-	        case 4:
-	        	// List research stations built
-	            System.out.println("List of research stations built:");
-	           
-
-	            for (City city : world.getCities()) {
-	                if (city.isResearchStation()) {
-	                    System.out.println("- " + city.getName());
-	                    
+	                break;
+	            case 2:
+	                // Display whose turn it is
+	                Player currentPlayer = whosTurnIsIt();
+	                System.out.println("Current turn: " + currentPlayer.getName());
+	                break;
+	            case 3:
+	                // Display list of cities and their neighbors
+	                System.out.println("List of cities and their neighbors:");
+	                for (City city : world.getCities()) {
+	                    ArrayList<City> neighbors = world.getCityNeighbours(city);
+	                    ArrayList<String> neighborNames = new ArrayList<>();
+	                    for (City neighbor : neighbors) {
+	                        neighborNames.add(neighbor.getName());
+	                    }
+	                    System.out.println(city.getName() + " neighbors: " + neighborNames);
 	                }
-	            }
+	                break;
+	            case 4:
+	                // List research stations built
+	                System.out.println("List of research stations built:");
 
-	            int remainingStations = world.getResearchStationsAvailable();
-	            System.out.println("Number of remaining research stations: " + remainingStations);
-	        	
-	        	
-	            break;
-	        case 5:
-	        	// List diseases with available remedies
-	        	System.out.println("List of diseases with available remedies:");
-	        	for (Disease disease : world.getRemedies()) {
-	        	    System.out.println("- " + disease);
-	        	}
-
-	        	// List diseases not yet eradicated
-	        	System.out.println("\nList of diseases not yet eradicated:");
-	        	for (Disease disease : Disease.values()) {
-	        	        System.out.println("- " + disease);  
-	        	}
-
-	            break;
-	        case 6:
-	        	// Display number of outbreaks that have occurred
-	            System.out.println("Number of outbreaks occurred: " + world.getNbOutBreaks()) ;
-	            break;
-	        case 7:
-	        	// Display current infection rate
-	            int infectionRate = world.getInfectionRate();
-	            System.out.println("Current infection rate: " + infectionRate);
-	            break;
-	        case 8:
-	        	// Display diseases present in each city
-	            System.out.println("Diseases present in each city:");
-	            for (City city : world.getCities()) {
-	                ArrayList<Disease> diseases = city.getDiseases();
-	                System.out.print(city.getName() + ": [");
-	                if (diseases.isEmpty()) {
-	                    System.out.print("No diseases present");
-	                } else {
-	                    for (int i = 0; i < diseases.size(); i++) {
-	                        System.out.print(diseases.get(i));
-	                        if (i < diseases.size() - 1) {
-	                            System.out.print(", ");
-	                        }
+	                for (City city : world.getCities()) {
+	                    if (city.isResearchStation()) {
+	                        System.out.println("- " + city.getName());
 	                    }
 	                }
-	                System.out.println("]");
-	            }
-	            break;
-	        case 9:
-	        	// Display current disease cube distribution
-	            System.out.println("Current disease cube distribution:");
-	            HashMap<Disease, Integer> diseaseCubes = this.diseaseCubes;
-	            for (Entry<Disease, Integer> entry : diseaseCubes.entrySet()) {
-	                Disease disease = entry.getKey();
-	                int cubeCount = entry.getValue();
-	                System.out.println(disease + ": " + cubeCount + " cubes");
-	            }
-	            break;
-	        case 10:
-	        	 // Display number of cards in each pile
-	            System.out.println("Number of cards in each pile:");
-	            System.out.println("Player Deck: " + this.world.getPlayerDeck().size() + " cards");
-	            System.out.println("Player Discard Pile: " + this.world.getplayerDiscardPile().size() + " cards");
-	            System.out.println("Infection Deck: " + this.world.getInfectionDeck().size() + " cards");
-	            System.out.println("Infection Discard Pile: " + this.world.getInfectionDiscardPile().size() + " cards");
-	            break;
-	        
+
+	                int remainingStations = world.getResearchStationsAvailable();
+	                System.out.println("Number of remaining research stations: " + remainingStations);
+	                break;
+	            case 5:
+	                // List diseases with available remedies
+	                System.out.println("List of diseases with available remedies:");
+	                for (Disease disease : world.getRemedies()) {
+	                    System.out.println("- " + disease);
+	                }
+
+	                // List diseases not yet eradicated
+	                System.out.println("\nList of diseases not yet eradicated:");
+	                for (Disease disease : Disease.values()) {
+	                    System.out.println("- " + disease);
+	                }
+
+	                break;
+	            case 6:
+	                // Display number of outbreaks that have occurred
+	                System.out.println("Number of outbreaks occurred: " + world.getNbOutBreaks());
+	                break;
+	            case 7:
+	                // Display current infection rate
+	                int infectionRate = world.getInfectionRate();
+	                System.out.println("Current infection rate: " + infectionRate);
+	                break;
+	            case 8:
+	                // Display diseases present in each city
+	                System.out.println("Diseases present in each city:");
+	                for (City city : world.getCities()) {
+	                    ArrayList<Disease> diseases = city.getDiseases();
+	                    System.out.print(city.getName() + ": [");
+	                    if (diseases.isEmpty()) {
+	                        System.out.print("No diseases present");
+	                    } else {
+	                        for (int i = 0; i < diseases.size(); i++) {
+	                            System.out.print(diseases.get(i));
+	                            if (i < diseases.size() - 1) {
+	                                System.out.print(", ");
+	                            }
+	                        }
+	                    }
+	                    System.out.println("]");
+	                }
+	                break;
+	            case 9:
+	                // Display current disease cube distribution
+	                System.out.println("Current disease cube distribution:");
+	                HashMap<Disease, Integer> diseaseCubes = this.diseaseCubes;
+	                for (Entry<Disease, Integer> entry : diseaseCubes.entrySet()) {
+	                    Disease disease = entry.getKey();
+	                    int cubeCount = entry.getValue();
+	                    System.out.println(disease + ": " + cubeCount + " cubes");
+	                }
+	                break;
+	            case 10:
+	                // Display number of cards in each pile
+	                System.out.println("Number of cards in each pile:");
+	                System.out.println("Player Deck: " + this.world.getPlayerDeck().size() + " cards");
+	                System.out.println("Player Discard Pile: " + this.world.getplayerDiscardPile().size() + " cards");
+	                System.out.println("Infection Deck: " + this.world.getInfectionDeck().size() + " cards");
+	                System.out.println("Infection Discard Pile: " + this.world.getInfectionDiscardPile().size() + " cards");
+	                break;
+	            case 11:
+	                exit = true;
+	                break;
+	        }
 	    }
 	}
 
@@ -244,7 +253,7 @@ public class PandemicGame {
 	}
 	
 	
-	private void initiate() {
+private void initiate() {
 		
 		System.out.println("Welcome to the Pandemic game. Made by Sidahmed & Mahiedine.");
 		System.out.println("Initializing the game...");
@@ -353,6 +362,7 @@ public class PandemicGame {
 	    
 	    System.out.println("Game initiated successfully!");
 	}
+
 
 	private void launchInitialInfection() {
 	    System.out.println("=== Initial Infection ===");
@@ -612,6 +622,7 @@ public class PandemicGame {
 	        case 5:
 	            // Do nothing
 	            System.out.println("You chose to do nothing.");
+	            player.doNothing() ;
 	            break;
 	        default:
 	            System.out.println("Invalid choice. Please try again.");
