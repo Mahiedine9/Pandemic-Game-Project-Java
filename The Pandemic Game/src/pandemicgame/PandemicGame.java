@@ -60,7 +60,6 @@ public class PandemicGame {
 
 	    while (!this.gameIsOver) {
 	        this.playTurn(this.whosTurnIsIt());
-	        
 
 	        // Prompt the user to choose an action
 	        System.out.println("1. View game state");
@@ -69,12 +68,14 @@ public class PandemicGame {
 	        int choice = getUserChoice(1, 2);
 
 	        if (choice == 1) {
+	        	
 	            this.displayGameState();
-	        
-	        this.checkGameOver();
 	        }
+	       
+	        this.checkGameOver();
 	    }
 	}
+	
 	private Player whosTurnIsIt() {
 		Player currentPlayer = this.players.get(this.currentPlayerIndex);
 	    // Update currentPlayerIndex to point to the next player
@@ -86,6 +87,7 @@ public class PandemicGame {
 	    boolean exit = false;
 
 	    while (!exit) {
+	    	displayWithDelay("", 1000);
 	        System.out.println("Please choose which information you want to view:");
 	        System.out.println("1. List of players, their roles, and their current locations");
 	        System.out.println("2. Whose turn it is");
@@ -103,7 +105,7 @@ public class PandemicGame {
 
 	        switch (choice) {
 	            case 1:
-	                // Display list of players, their roles, and their current locations
+	            	displayWithDelay("", 1000);
 	                System.out.println("List of players, their roles, and their current locations:");
 	                for (Player player : players) {
 	                    System.out.println("Player: " + player.getName());
@@ -111,66 +113,70 @@ public class PandemicGame {
 	                    System.out.println("Current Location: " + player.getCity().getName());
 	                    System.out.println("-----------------------");
 	                }
+	                
 	                break;
 	            case 2:
-	                // Display whose turn it is
+	            	displayWithDelay("", 1000);
 	                Player currentPlayer = whosTurnIsIt();
 	                System.out.println("Current turn: " + currentPlayer.getName());
 	                break;
 	            case 3:
-	                // Display list of cities and their neighbors
+	            	displayWithDelay("", 1000);
 	                System.out.println("List of cities and their neighbors:");
 	                for (City city : world.getCities()) {
 	                    ArrayList<City> neighbors = world.getCityNeighbours(city);
-	                    ArrayList<String> neighborNames = new ArrayList<>();
+	                    StringBuilder neighborNames = new StringBuilder();
 	                    for (City neighbor : neighbors) {
-	                        neighborNames.add(neighbor.getName());
+	                        neighborNames.append(neighbor.getName()).append(", ");
 	                    }
+	                    neighborNames.delete(neighborNames.length() - 2, neighborNames.length()); // Remove trailing comma and space
 	                    System.out.println(city.getName() + " neighbors: " + neighborNames);
+	                    
 	                }
+	                
 	                break;
 	            case 4:
-	                // List research stations built
+	            	displayWithDelay("", 1000);
 	                System.out.println("List of research stations built:");
-
 	                for (City city : world.getCities()) {
 	                    if (city.isResearchStation()) {
 	                        System.out.println("- " + city.getName());
 	                    }
 	                }
-
 	                int remainingStations = world.getResearchStationsAvailable();
 	                System.out.println("Number of remaining research stations: " + remainingStations);
+	               
 	                break;
 	            case 5:
-	                // List diseases with available remedies
+	            	displayWithDelay("", 1000);
 	                System.out.println("List of diseases with available remedies:");
 	                for (Disease disease : world.getRemedies()) {
 	                    System.out.println("- " + disease);
 	                }
-
-	                // List diseases not yet eradicated
 	                System.out.println("\nList of diseases not yet eradicated:");
 	                for (Disease disease : Disease.values()) {
 	                    System.out.println("- " + disease);
 	                }
-
+	                
 	                break;
 	            case 6:
-	                // Display number of outbreaks that have occurred
+	            	displayWithDelay("", 1000);
 	                System.out.println("Number of outbreaks occurred: " + world.getNbOutBreaks());
+	                
 	                break;
 	            case 7:
-	                // Display current infection rate
+	            	displayWithDelay("", 1000);
 	                int infectionRate = world.getInfectionRate();
 	                System.out.println("Current infection rate: " + infectionRate);
+	                
 	                break;
+	                
 	            case 8:
-	                // Display diseases present in each city
+	            	displayWithDelay("", 1000);
 	                System.out.println("Diseases present in each city:");
 	                for (City city : world.getCities()) {
 	                    ArrayList<Disease> diseases = city.getDiseases();
-	                    System.out.print(city.getName() + ": [");
+	                    System.out.print(city.getName() + ": ");
 	                    if (diseases.isEmpty()) {
 	                        System.out.print("No diseases present");
 	                    } else {
@@ -181,31 +187,38 @@ public class PandemicGame {
 	                            }
 	                        }
 	                    }
-	                    System.out.println("]");
+	                    System.out.println();
 	                }
+	                
 	                break;
 	            case 9:
-	                // Display current disease cube distribution
+	            	displayWithDelay("", 1000);
 	                System.out.println("Current disease cube distribution:");
 	                HashMap<Disease, Integer> diseaseCubes = this.diseaseCubes;
 	                for (Entry<Disease, Integer> entry : diseaseCubes.entrySet()) {
 	                    Disease disease = entry.getKey();
 	                    int cubeCount = entry.getValue();
 	                    System.out.println(disease + ": " + cubeCount + " cubes");
-	                }
+	                }   
 	                break;
 	            case 10:
-	                // Display number of cards in each pile
+	            	displayWithDelay("", 1000);
 	                System.out.println("Number of cards in each pile:");
 	                System.out.println("Player Deck: " + this.world.getPlayerDeck().size() + " cards");
 	                System.out.println("Player Discard Pile: " + this.world.getplayerDiscardPile().size() + " cards");
 	                System.out.println("Infection Deck: " + this.world.getInfectionDeck().size() + " cards");
 	                System.out.println("Infection Discard Pile: " + this.world.getInfectionDiscardPile().size() + " cards");
+	                
 	                break;
 	            case 11:
+	            	displayWithDelay("", 1000);
 	                exit = true;
+	                displayWithDelay("", 1000);
 	                break;
+	                
 	        }
+
+	        displayWithDelay("", 1000);
 	    }
 	}
 
@@ -250,13 +263,15 @@ public class PandemicGame {
 	    } else {
 	        System.out.println("The game is still ongoing.");
 	    }
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
-private void initiate() {
+	private void initiate() {
+		displayWithDelay("Welcome to the Pandemic game. Made by Sidahmed & Mahiedine.", 1000);
+		displayWithDelay("Initializing the game....", 1000);
 		
-		System.out.println("Welcome to the Pandemic game. Made by Sidahmed & Mahiedine.");
-		System.out.println("Initializing the game...");
 	    // Adding disease cubes
 	    for (Disease disease : this.world.getDiseases()) {
 	        this.diseaseCubes.put(disease, 24);
@@ -359,8 +374,9 @@ private void initiate() {
 	    
 	    startingCity.turnResearchStation();
 	    this.world.countUsedResearchStation();
-	    
-	    System.out.println("Game initiated successfully!");
+
+	    displayWithDelay("Game initiated successfully!", 1000);
+
 	}
 
 
@@ -405,6 +421,7 @@ private void initiate() {
 	        this.addDiseaseCube(city, disease);
 	        this.world.DiscardInfectionCard(card);
 	    }
+	    displayWithDelay("", 1000);
 	}
 	
 	
@@ -435,6 +452,7 @@ private void initiate() {
 	        }
 	        System.out.println();
 	    }
+	    displayWithDelay("", 1000);
 	}
 	
 	
@@ -468,6 +486,7 @@ private void initiate() {
 	        this.addDiseaseCube(city, disease);
 	        this.world.DiscardInfectionCard(card);
 	    }
+	    displayWithDelay("", 1000);
 	}
 	
 	
@@ -497,6 +516,7 @@ private void initiate() {
 	            }
 	        }
 	    }
+	    
 	}
 	
 	
@@ -550,6 +570,8 @@ private void initiate() {
 	    // Discard the epidemic card
 	    System.out.println("Discarding the epidemic card.");
 	    this.world.getplayerDiscardPile().add(epidemicCard);
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
@@ -586,6 +608,13 @@ private void initiate() {
 	    // Initiate the infection phase
 	    System.out.println("Initiating the infection phase.");
 	    this.launchInfectionPhase(false);
+	    
+	    System.out.println(); // Add an empty line after each information display
+        try {
+            Thread.sleep(1000); // Adjust the duration as needed (e.g., 1000 milliseconds = 1 second)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 	}
 	
 	private void performAction(Player player) {
@@ -603,37 +632,45 @@ private void initiate() {
 	            // Perform move action
 	            System.out.println("You chose to move.");
 	            this.performMoveAction(player);
+	            displayWithDelay("", 1000);
 	            break;
 	        case 2:
 	            // Perform build action
 	            System.out.println("You chose to build a research station.");
 	            this.perfromBuildAction(player);
+	            displayWithDelay("", 1000);
 	            break;
 	        case 3:
 	            // Perform find action
 	            System.out.println("You chose to find a remedy.");
 	            this.perfromFindAction(player);
+	            displayWithDelay("", 1000);
 	            break;
 	        case 4:
 	            // Perform treat action
 	            System.out.println("You chose to treat a disease.");
 	            this.perfromTreatAction(player);
+	            displayWithDelay("", 1000);
 	            break;
 	        case 5:
 	            // Do nothing
 	            System.out.println("You chose to do nothing.");
 	            player.doNothing() ;
+	            displayWithDelay("", 1000);
 	            break;
 	        default:
 	            System.out.println("Invalid choice. Please try again.");
+	            displayWithDelay("", 1000);
 	            break;
 	    }
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
 	private void perfromTreatAction(Player player) {
 	    System.out.println("Choose a disease to treat:");
-	    ArrayList<Disease> diseases = player.getCity().getDiseases();
+	    ArrayList<Disease> diseases = this.world.getDiseases();
 
 	    // Display the available diseases in the current city
 	    for (int i = 0; i < diseases.size(); i++) {
@@ -661,12 +698,14 @@ private void initiate() {
 	    } else {
 	        this.removeDiseaseCube(selectedDisease, 1);
 	    }
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
 	private void perfromFindAction(Player player) {
 	    System.out.println("Choose a disease to find a remedy for:");
-	    ArrayList<Disease> diseases = new ArrayList<>(Arrays.asList(Disease.values()));
+	    ArrayList<Disease> diseases = this.world.getDiseases();
 
 	    // Display the available diseases
 	    for (int i = 0; i < diseases.size(); i++) {
@@ -684,6 +723,8 @@ private void initiate() {
 	    } catch (NotEnoughCardsToFindARemedyException e) {
 	        System.out.println("Not enough cards to find a remedy for " + selectedDisease.name() + ". Collect more cards to discover a remedy.");
 	    }
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
@@ -738,12 +779,15 @@ private void initiate() {
 	            System.out.println("Invalid choice. Please try again.");
 	            break;
 	    }
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
 	private void performMoveAction(Player player) {
 	    System.out.println("Available cities to move:");
 	    ArrayList<City> neighborCities = this.world.getCityNeighbours(player.getCity());
+	    
 
 	    // Display the neighbor cities
 	    for (int i = 0; i < neighborCities.size(); i++) {
@@ -759,6 +803,8 @@ private void initiate() {
 	    } catch (NotANeighbourCityException e) {
 	        System.out.println("Invalid move: The selected city is not a neighbor!");
 	    }
+	    
+	    displayWithDelay("", 1000);
 	}
 	
 	
@@ -798,5 +844,15 @@ private void initiate() {
 	    quartilePositions.add((3 * size) / 4);  // Position representing 75%
 
 	    return quartilePositions;
-	}	
+	}
+	
+	
+	private void displayWithDelay(String message, int delay) {
+	    System.out.println(message);
+	    try {
+	        Thread.sleep(delay);
+	    } catch (InterruptedException e) {
+	        e.printStackTrace();
+	    }
+	}
 }
