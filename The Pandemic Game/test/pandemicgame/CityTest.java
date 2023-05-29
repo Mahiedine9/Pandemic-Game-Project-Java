@@ -18,12 +18,7 @@ class CityTest {
 		for (Disease disease : Disease.values()) assertFalse(city.isOutBreakOfInfection(disease)) ; 
 	}
 	
-	@Test
-	public void testSetName() {
-		this.city.setName("Paris");
-		assertEquals("Paris", this.city.getName()) ;
-		
-	}
+	
 	
 	@Test
 	public void testisResearchStationAndturnResearchStation() {

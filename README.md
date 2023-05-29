@@ -118,7 +118,7 @@ someone@somewhere/../l2s4-projet-2023:~$ java pandemicgame.PandemicGameMain
    - ✔️ crée un plateau de jeu à partir d’un fichier JSON passé en argument sur la ligne de commande :
    - ✔️ création des villes, création des paquets de cartes, et de tout ce qui est nécessaire pour le jeu ;
    - ✔️ crée 4 joueurs, chacun ayant un rôle différent, les place sur une ville (peu importe laquelle) ;
-   - ⏳ lance le jeu qui réalise toutes les phases (pour chaque joueur : jouer 4 actions, piocher 2 cartes, propager les maladies, se référer au sujet et à la règle du jeu).
+   - ✔️ lance le jeu qui réalise toutes les phases (pour chaque joueur : jouer 4 actions, piocher 2 cartes, propager les maladies, se référer au sujet et à la règle du jeu).
 
 N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se terminer).
 
@@ -126,7 +126,7 @@ N.B : La gestion de la fin du jeu n'est pas obligatoire (le jeu pourra ne pas se
 ## Rendu Final 
    
     - ✔️ le fichier README.md (ou readme.md) avec les sections livrables et journal complétées
-    - ⏳ UML version finale
+    - ✔️ UML version finale
     - ✔️ répertoire src, test et jar
     - ⏳ un fichier Makefile supportant au moins ,make clean, make doc (pour produire la javadoc), make jeu.jar (voir ci-dessous), make cls (pour produire les fichier .class)
     - mise en fore ( documentation à 100%, structure propore des dossiers, pas de fichers logiciels...etc)
