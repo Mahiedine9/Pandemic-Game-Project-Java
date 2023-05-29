@@ -21,10 +21,9 @@ public class PandemicGame {
 	private ArrayList<Player> players ;
 	private Iterator<Player> currentlyPlaying ;
 	private HashMap<Disease, Integer> diseaseCubes ;
-	private Integer index;
 	private ArrayList<City> citiesAlreadyInfectedDuringCurrentInfectionPhase ;
-	private boolean gameIsOver ;
-	private int currentPlayerIndex;
+	private Boolean gameIsOver ;
+	private Integer currentPlayerIndex;
 	private ArrayList<City> outBreakCities ;
 	
 	public PandemicGame (World world, ArrayList<Player> players ) {
@@ -577,7 +576,7 @@ public class PandemicGame {
 	
 	private void playTurn(Player player) {
 	    // A player needs to perform four actions from the available options
-	    while (player.hasActionsRemaning()) {
+	    while (player.hasActionsRemaining()) {
 	        System.out.println(player.getName() + ", it's your turn to take action.");
 	        this.performAction(player);
 	    }

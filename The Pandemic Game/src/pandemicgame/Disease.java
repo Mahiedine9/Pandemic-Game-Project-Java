@@ -1,7 +1,9 @@
 package pandemicgame;
 
-
+// Enum representing different types of diseases
 public enum Disease {
-	DISEASE1, DISEASE2, DISEASE3, DISEASE4
-
+    DISEASE1, // Disease 1
+    DISEASE2, // Disease 2
+    DISEASE3, // Disease 3
+    DISEASE4  // Disease 4
 }
