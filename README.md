@@ -12,7 +12,7 @@
 
 [Le sujet 2023](https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/sujet2023.pdf)
 
-## Comment lancer le jeu ?
+##  Comment lancer le jeu ?
    
     - Clonez le projet dans Eclipse en utilisant l'importation intelligente (vidéo expliquante sur le portail : https://www.fil.univ-lille.fr/~varre/portail/l2s4-projet/videos/3-eclipse-creation-git-avec-contenu.mp4).
     - Accédez au package "pandemic game/src/PandemicGameMain".
