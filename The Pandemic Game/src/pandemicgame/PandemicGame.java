@@ -38,6 +38,8 @@ public class PandemicGame {
 		
 	}
 	
+	private void nothing () {} 
+	
 	public World getWorld() {
 		return this.world ;
 	}
